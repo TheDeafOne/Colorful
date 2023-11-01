@@ -1,25 +1,17 @@
 from flask import Flask, render_template
+from colorful.api import api_bp
+from colorful.auth import auth_bp
+from colorful.main import main_bp
 
-app = Flask(__name__)
+def create_app():
+    app = Flask(__name__, instance_relative_config=True)
+    
 
-app.jinja_env.auto_reload = True
-app.config['TEMPLATES_AUTO_RELOAD'] = True
+    app.jinja_env.auto_reload = True
+    app.config['TEMPLATES_AUTO_RELOAD'] = True
 
-@app.get('/')
-def index():
-    return render_template("index.html")
+    app.register_blueprint(api_bp, url_prefix='/api/')
+    app.register_blueprint(auth_bp)
+    app.register_blueprint(main_bp)
 
-@app.get('/register/')
-def get_register():
-    return render_template("register.html")
-
-@app.get('/login/')
-def get_login():
-    return render_template("login.html")
-
-@app.get('/about/')
-def get_about():
-    return render_template("about.html")
-
-if __name__ == "__main__":
-    app.run(debug=True)
+    return app
