@@ -4,7 +4,25 @@ Login
 {% endblock %}
 {% block content %}
 <h1>Login to ColorfulWorld</h1>
+<div class="container">
+    {% for message in get_flashed_messages() %}
+      <div class="alert alert-warning d-flex align-items-center alert-dismissible fade show">
+        <button type="button" class="close" data-bs-dismiss="alert"> 
+          &times;
+        </button>
+        {{ message }}
+      </div>
+    {% endfor %}
+</div>
 <form method="POST">
-    <input type="submit">
+    {{form.hidden_tag()}}
+
+    {{form.email.label}}
+    {{form.email()}}
+    <br>
+    {{form.password.label}}
+    {{form.password()}}
+    <br>
+    {{form.submit()}}
 </form>
 {% endblock %}

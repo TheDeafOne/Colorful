@@ -11,9 +11,15 @@
     <div class="flex-1"></div>
     <h1 class="text-5xl">Welcome to Colorful.World</h1>
     <h2 class="text-xl">Ready to Get Colorful?</h2>
+    {% if current_user.is_authenticated %}
+      <h1>Logged in as {{current_user.email}}</h1>
+    {% else %}
+      <h1>Not logged in</h1>
+    {% endif %}
     <div class="flex gap-4 text-fuchsia-900"><a class="bg-red-50 p-4 rounded-lg" href="/register/">Register</a><a class="bg-red-50 p-4 rounded-lg" href="/login/">Log In</a></div>
     <div class="flex gap-4 text-fuchsia-900"><a class="font-semibold" href="/about/">Learn More</a></div>
     <div class="flex-1"></div>
+    
 </div>
 </body>
 </html>

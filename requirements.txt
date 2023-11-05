@@ -1,5 +1,9 @@
 flask==3.0.0
-flask-security==3.0.0
+flask-login==0.6.3
 flask-wtf==1.2.1
 flask-sqlalchemy==3.1.1
 email-validator==2.0.0
+bcrypt==4.0.1
+argon2-cffi==23.1.0
+passlib==1.7.4
+cryptography==41.0.5
