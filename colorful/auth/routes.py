@@ -26,16 +26,16 @@ def post_register():
                         password=form.password.data)  # type:ignore
             db.session.add(user)
             db.session.commit()
-            return redirect(url_for('get_login'))
+            return redirect(url_for('auth.get_login'))
         else:  # if the user already exists
             # flash a warning message and redirect to get registration form
             flash('There is already an account with that email address')
-            return redirect(url_for('get_register'))
+            return redirect(url_for('auth.get_register'))
     else:  # if the form was invalid
         # flash error messages and redirect to get registration form again
         for field, error in form.errors.items():
             flash(f"{field}: {error}")
-        return redirect(url_for('get_register'))
+        return redirect(url_for('auth.get_register'))
 
 
 @auth_bp.get('/login/')
@@ -62,12 +62,12 @@ def post_login():
         else:  # if the user does not exist or the password is incorrect
             # flash an error message and redirect to login form
             flash('Invalid email address or password')
-            return redirect(url_for('get_login'))
+            return redirect(url_for('auth.get_login'))
     else:  # if the form was invalid
         # flash error messages and redirect to get login form again
         for field, error in form.errors.items():
             flash(f"{field}: {error}")
-        return redirect(url_for('get_login'))
+        return redirect(url_for('auth.get_login'))
 
 
 @auth_bp.get('/logout/')
@@ -75,4 +75,4 @@ def post_login():
 def get_logout():
     logout_user()
     flash('You have been logged out')
-    return redirect(url_for('index'))
+    return redirect(url_for('main.index'))

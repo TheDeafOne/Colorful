@@ -28,3 +28,5 @@ class User(UserMixin, db.Model):
     def verify_password(self, pwd: str) -> bool:
         return password_hasher.check(pwd, self.password_hash)
     
+
+
