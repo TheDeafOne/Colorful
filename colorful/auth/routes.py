@@ -22,7 +22,8 @@ def post_register():
         user = User.query.filter_by(email=form.email.data).first()
         # if the email address is free, create a new user and send to login
         if user is None:
-            user = User(email=form.email.data,
+            user = User(username=form.username.data,
+                        email=form.email.data,
                         password=form.password.data)  # type:ignore
             db.session.add(user)
             db.session.commit()

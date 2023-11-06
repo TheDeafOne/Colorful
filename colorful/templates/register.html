@@ -17,6 +17,9 @@ Register
 <form method="POST">
     {{form.hidden_tag()}}
 
+    {{form.username.label}}
+    {{form.username()}}
+    <br>
     {{form.email.label}}
     {{form.email()}}
     <br>
