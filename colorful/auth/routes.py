@@ -2,7 +2,9 @@ from flask import flash, redirect, render_template, request, url_for
 from flask_login import (LoginManager, current_user, login_required,
                          login_user, logout_user)
 
-from colorful.db import User, db
+# from colorful.db import User, db
+import colorful.db as database
+
 from colorful.forms import LoginForm, RegisterForm
 
 from . import auth_bp
@@ -19,14 +21,14 @@ def post_register():
     form = RegisterForm()
     if form.validate():
         # check if there is already a user with this email address
-        user = User.query.filter_by(email=form.email.data).first()
+        user = database.User.query.filter_by(email=form.email.data).first()
         # if the email address is free, create a new user and send to login
         if user is None:
-            user = User(username=form.username.data,
+            user = database.User(username=form.username.data,
                         email=form.email.data,
                         password=form.password.data)  # type:ignore
-            db.session.add(user)
-            db.session.commit()
+            database.db.session.add(user)
+            database.db.session.commit()
             return redirect(url_for('auth.get_login'))
         else:  # if the user already exists
             # flash a warning message and redirect to get registration form
@@ -50,7 +52,7 @@ def post_login():
     form = LoginForm()
     if form.validate():
         # try to get the user associated with this email address
-        user = User.query.filter_by(email=form.email.data).first()
+        user = database.User.query.filter_by(email=form.email.data).first()
         # if this user exists and the password matches
         if user is not None and user.verify_password(form.password.data):
             # log this user in through the login_manager
