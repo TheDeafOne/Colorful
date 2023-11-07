@@ -15,7 +15,8 @@ class User(UserMixin, db.Model):
     __tablename__ = 'User'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.Unicode, nullable=False)
-    currentStatus = db.Column(db.Integer, db.ForeignKey("Status.id"), nullable=True)
+    currentStatusID = db.Column(db.Integer, db.ForeignKey("Status.id"), nullable=True)
+    
     # TODO: Add Relationships between tables
 
     email = db.Column(db.Unicode, nullable=False)
@@ -40,3 +41,5 @@ class Status(db.Model):
     text = db.Column(db.Unicode, nullable=False)
     color = db.Column(db.Unicode, nullable=False) # To implement with ML...
     user = db.Column(db.Integer, db.ForeignKey("User.id"), nullable=False)
+    UserIsCurrentStatus = db.relationship('User', foreign_keys='User.currentStatusID', backref='currentStatus')
+
