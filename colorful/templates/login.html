@@ -1,28 +1,44 @@
-{% extends 'base.html' %}
-{% block title %}
-Login
-{% endblock %}
-{% block content %}
-<h1>Login to ColorfulWorld</h1>
-<div class="container">
-    {% for message in get_flashed_messages() %}
-      <div class="alert alert-warning d-flex align-items-center alert-dismissible fade show">
-        <button type="button" class="close" data-bs-dismiss="alert"> 
-          &times;
-        </button>
-        {{ message }}
-      </div>
-    {% endfor %}
-</div>
-<form method="POST">
-    {{form.hidden_tag()}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register-ColorfulWorld</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+<div class="bg-gradient-to-br text-black from-orange-600 to-fuchsia-400 m-0 gap-8 flex items-center flex-col h-screen justify-center">
+  <h1 class="text-5xl text-white">Login to Colorful.World</h1>
+   <div class="w-full max-w-xs">
+    <div class="container">
+        {% for message in get_flashed_messages() %}
+          <div class="alert alert-warning d-flex align-items-center alert-dismissible fade show">
+            <button type="button" class="close" data-bs-dismiss="alert"> 
+              &times;
+            </button>
+            {{ message }}
+          </div>
+        {% endfor %}
+    </div>
 
-    {{form.email.label}}
-    {{form.email()}}
-    <br>
-    {{form.password.label}}
-    {{form.password()}}
-    <br>
-    {{form.submit()}}
-</form>
-{% endblock %}
+
+    <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" method="POST">
+      {{form.hidden_tag()}}
+  
+      <div class="mb-6">
+      {{form.email.label(class="block text-gray-700 text-sm font-bold mb-2")}}
+      {{form.email(class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline")}}
+      </div>
+      <div class="mb-6">
+      {{form.password.label(class="block text-gray-700 text-sm font-bold mb-2")}}
+      {{form.password(class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline")}}
+      </div>
+      <div class="flex justify-center">
+      {{form.submit(class="bg-red-400 hover:bg-red-300 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline")}}
+      </div>
+    </form>
+    <div class="flex text-fuchsia-900 justify-center"><a class="font-semibold" href={{url_for('auth.get_register')}}>Don't have an account? Register Here</a></div>
+  </div>
+</div>
+</body>
+</html>
