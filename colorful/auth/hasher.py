@@ -1,5 +1,5 @@
 from cryptography.fernet import Fernet
-from passlib.hash import argon2, bcrypt_sha256
+from passlib.hash import argon2
 
 class UpdatedHasher:
     """Upgrades the Dropbox for modern systems using Argon2"""
