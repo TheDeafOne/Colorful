@@ -13,8 +13,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     // testButton.addEventListener("click", getStatusList)
 });
 
-function geolocate() {
-    console.log('attempting');
+async function geolocate() {
+    fetch('https://ipapi.co/json/')
+        .then(response => response.json())
+        .then(data => {
+            console.log(JSON.stringify(data, null, 2));
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+    });
     // Check if geolocation is supported by the browser
     if ("geolocation" in navigator) {
         // Prompt user for permission to access their location
