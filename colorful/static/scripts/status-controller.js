@@ -52,7 +52,6 @@ async function addStatus() {
         await getGeolocationData.then((location) => {
             latitude = location.latitude
             longitude = location.longitude
-            console.log('internal', latitude);
         }).catch((err) => {
             console.log(err)
         });
