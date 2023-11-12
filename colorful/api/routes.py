@@ -1,21 +1,25 @@
-from flask import render_template, Response, request, jsonify
-from flask_login import current_user, login_required
-import colorful.db as database
 from datetime import datetime
 
+from flask import Response, jsonify, render_template, request
+from flask_login import current_user, login_required
+
+import colorful.db as database
 
 from . import api_bp
+
 
 @api_bp.post('/setStatus/')
 @login_required
 def set_status():
     status = request.json['status']
-    if(status is None):
+    print(request.json)
+    if (status is None):
         return Response(status=400)
 
     user_id = int(current_user.get_id())
 
-    dbStatus = database.Status(time=str(datetime.now()), text = status, color = "White", user = user_id)
+    dbStatus = database.Status(
+        time=str(datetime.now()), text=status, color="White", user=user_id)
     database.db.session.add(dbStatus)
     database.db.session.commit()
 
@@ -25,8 +29,6 @@ def set_status():
     database.db.session.commit()
 
     return Response(status=200)
-
-
 
 
 @api_bp.get('/getStatusList/')

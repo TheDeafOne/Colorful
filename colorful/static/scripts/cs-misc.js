@@ -1,56 +1,68 @@
-
+let geolocationMethod = 'SPECIFIC';
 
 document.addEventListener("DOMContentLoaded", async () => {
+    window.namespace = {}
     displayStatusList();
 
     // TODO: add an event listener to call search when the button is clicked
     const button = document.getElementById("setStatus-button");
     button.addEventListener("click", addStatus);
-
-    const geoLocateButton = document.getElementById("geolocate-button");
-    geoLocateButton.addEventListener("click", geolocate);
-    // const testButton = document.getElementById("test-button")
-    // testButton.addEventListener("click", getStatusList)
 });
 
-async function geolocate() {
-    fetch('https://ipapi.co/json/')
-        .then(response => response.json())
-        .then(data => {
-            console.log(JSON.stringify(data, null, 2));
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-    });
-    // Check if geolocation is supported by the browser
-    if ("geolocation" in navigator) {
-        // Prompt user for permission to access their location
-        navigator.geolocation.getCurrentPosition(
-            // Success callback function
-            (position) => {
-                // Get the user's latitude and longitude coordinates
-                const lat = position.coords.latitude;
-                const lng = position.coords.longitude;
 
-                // Do something with the location data, e.g. display on a map
-                console.log(`Latitude: ${lat}, longitude: ${lng}`);
-            },
-            // Error callback function
-            (error) => {
-                // Handle errors, e.g. user denied location sharing permissions
-                console.error("Error getting user location:", error);
+// adapted from https://stackoverflow.com/a/66259340/10181378
+const getGeolocationData = new Promise((resolve, reject) => {
+    // use built in geolocation function to get location of user
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            lat = position.coords.latitude
+            long = position.coords.longitude
+
+            // pass the values to the resolve function, which lets us access the location data in addStatus
+            resolve({
+                latitude: lat,
+                longitude: long
+            })
+        },
+            (reject) => {
+                // user disabled specific geolocation, so set geolocation method to general
+                console.log(reject);
+                geolocationMethod = 'GENERAL'
             }
-        );
+        )
+
     } else {
-        // Geolocation is not supported by the browser
-        console.error("Geolocation is not supported by this browser.");
+        reject("your browser doesn't support geolocation API")
     }
-}
+})
+
 
 async function addStatus() {
     const statusStr = document.getElementById("setStatus-bar").value
+
+    // if no status update, ignore
     if (statusStr === "") {
         return
+    }
+
+    // get specific location of user
+    let latitude = 0;
+    let longitude = 0;
+    if (geolocationMethod === 'SPECIFIC') {
+        await getGeolocationData.then((location) => {
+            latitude = location.latitude
+            longitude = location.longitude
+            console.log('internal', latitude);
+        }).catch((err) => {
+            console.log(err)
+        });
+    } else { // general location of user
+        await fetch('https://ipapi.co/json/')
+            .then(response => response.json())
+            .then(data => {
+                latitude = data.latitude
+                longitude = data.longitude
+            })
     }
 
     const url = '/api/setStatus/'
@@ -60,7 +72,9 @@ async function addStatus() {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            "status": statusStr
+            "status": statusStr,
+            "latitude": latitude,
+            "longitutde": longitude
         })
     })
 
@@ -72,12 +86,8 @@ async function getStatusList() {
 
     const url = '/api/getStatusList/'
     const response = await fetch(url)
-    console.log(response)
+    // console.log(response)
     const responseJSON = await response.json()
-
-    // for(i in responseJSON){
-    //     console.log(`${i}, ${responseJSON[i]}`)
-    // }
 
     return responseJSON
 }
