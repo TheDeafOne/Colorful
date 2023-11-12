@@ -1,7 +1,6 @@
 let geolocationMethod = 'SPECIFIC';
 
 document.addEventListener("DOMContentLoaded", async () => {
-    window.namespace = {}
     displayStatusList();
 
     // TODO: add an event listener to call search when the button is clicked
