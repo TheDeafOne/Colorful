@@ -38,6 +38,8 @@ class Status(db.Model):
     __tablename__ = 'Status'
     id = db.Column(db.Integer, primary_key=True)
     time = db.Column(db.Unicode, nullable=False)
+    latitude = db.Column(db.Float, nullable=False)
+    longitude = db.Column(db.Float, nullable=False)
     text = db.Column(db.Unicode, nullable=False)
     color = db.Column(db.Unicode, nullable=False) # To implement with ML...
     user = db.Column(db.Integer, db.ForeignKey("User.id"), nullable=False)
