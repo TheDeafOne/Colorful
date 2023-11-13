@@ -25,5 +25,11 @@ def get_self_profile(id=None):
     user_id = current_user.get_id() if not id else id
     user = User.query.get(user_id)
     if user:
-        return render_template("profile.html", user=user, authenticated=current_user.is_authenticated)
+        return render_template("profile.html", user=user, is_same_user=user_id == current_user.get_id())
     return render_template("noProfileFound.html")
+
+
+@main_bp.get('/edit-profile/')
+def get_edit_profile():
+    user = User.query.get(current_user.get_id())
+    return render_template("editProfile.html", user=user)
