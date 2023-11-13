@@ -63,8 +63,9 @@ async function addStatus() {
             })
     }
 
+    // post data to db
     const url = '/api/setStatus/'
-    const response = await fetch(url, {
+    await fetch(url, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -72,19 +73,19 @@ async function addStatus() {
         body: JSON.stringify({
             "status": statusStr,
             "latitude": latitude,
-            "longitutde": longitude
+            "longitude": longitude
         })
     })
 
+    // update status list
     displayStatusList()
 }
 
 
 async function getStatusList() {
-
+    // grab all statuses
     const url = '/api/getStatusList/'
     const response = await fetch(url)
-    // console.log(response)
     const responseJSON = await response.json()
 
     return responseJSON
@@ -97,19 +98,14 @@ async function displayStatusList() {
     statusList.innerHTML = ""
 
 
-    for (username in stati) {
-
+    for (user_status of stati) {
         const containerDiv = document.createElement("div")
         containerDiv.className = "border-2 border-black p-4"
-
-        const userEl = document.createElement("span")
-        userEl.innerText = `${username}:`
-        userEl.innerHTML += "&nbsp"
-        const statusEl = document.createElement("span")
-        statusEl.innerText = stati[username]
-
-        containerDiv.append(userEl)
-        containerDiv.append(statusEl)
+        containerDiv.innerHTML = (
+            `<span>${user_status.name}: ${user_status.status}</span>
+             - <span>(${user_status.latitude}, ${user_status.longitude})</span>
+             - <span>${user_status.color}</span>`
+        );
         statusList.append(containerDiv)
     }
 }

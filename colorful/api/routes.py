@@ -12,14 +12,18 @@ from . import api_bp
 @login_required
 def set_status():
     status = request.json['status']
-    print(request.json)
     if (status is None):
         return Response(status=400)
 
     user_id = int(current_user.get_id())
 
     dbStatus = database.Status(
-        time=str(datetime.now()), text=status, color="White", user=user_id)
+        time=str(datetime.now()),
+        text=status,
+        latitude=request.json['latitude'],
+        longitude=request.json['longitude'],
+        color="White",
+        user=user_id)
     database.db.session.add(dbStatus)
     database.db.session.commit()
 
@@ -34,13 +38,20 @@ def set_status():
 @api_bp.get('/getStatusList/')
 @login_required
 def get_status_list():
-    user_id = int(current_user.get_id())
-
     users = database.User.query.all()
 
-    stati = {}
-
-    for u in users:
-        stati[u.username] = u.currentStatus.text
+    stati = []
+    user: database.User
+    for user in users:
+        if user.currentStatusID:
+            status = database.Status.query.get(user.currentStatusID)
+            stati.append({
+                'name': user.username,
+                'status': status.text,
+                'color': status.color,
+                'longitude': status.longitude,
+                'latitude': status.latitude,
+                'time': status.time
+            })
 
     return jsonify(stati)
