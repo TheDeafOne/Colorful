@@ -3,17 +3,20 @@
  -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %} {% endblock %}</title>
-    <script src="../static/scripts/cs-misc.js"></script>
+    <script src="../static/scripts/status-controller.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body>
-    <div class="bg-gradient-to-br from-orange-600 to-fuchsia-400 p-1">        
+    <div class="bg-gradient-to-br from-orange-600 to-fuchsia-400 p-1">
         <nav class="flex items-center justify-end flex-wrap">
-            <a href = "/logout/" class="font-semibold text-xl tracking-tight bg-orange-500 border-2 border-black p-6">Logout</a>
+            <a href="/logout/"
+                class="font-semibold text-xl tracking-tight bg-orange-500 border-2 border-black p-6">Logout</a>
             <a class="font-semibold text-xl tracking-tight bg-orange-500 border-2 border-black p-6">Profile</a>
         </nav>
     </div>
@@ -21,4 +24,5 @@
         {% block content %} {% endblock %}
     </div>
 </body>
+
 </html>
