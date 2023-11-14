@@ -2,7 +2,7 @@
     Is a template containing the NavBar (and footer)
  -->
 <!DOCTYPE html>
-<html lang="en">
+<html class="h-full" lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -13,7 +13,7 @@
     <script src="//unpkg.com/alpinejs" defer></script>
 </head>
 
-<body class="h-full m-0 p-0">
+<body class="h-full m-0 p-0 bg-gray-100 flex flex-col">
     <div class="bg-gradient-to-br from-orange-600 to-fuchsia-400 p-3">
         <nav class="flex flex-row items-center justify-center flex-wrap p-2 bg-white rounded">
             <div class="">
@@ -54,7 +54,7 @@
             </div>
         </nav>
     </div>
-    <div class="p-3 h-full">
+    <div class="p-3 h-full grow m-3 p-2 rounded bg-white drop-shadow">
         {% block content %} {% endblock %}
     </div>
 </body>
