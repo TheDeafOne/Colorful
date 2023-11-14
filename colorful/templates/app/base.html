@@ -8,20 +8,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %} {% endblock %}</title>
-    <script src="../static/scripts/status-controller.js"></script>
+    <script src="/static/scripts/status-controller.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
 </head>
 
-<body>
-    <div class="bg-gradient-to-br from-orange-600 to-fuchsia-400 p-1">
-        <nav class="flex items-center justify-end flex-wrap">
-            <a href="/logout/"
-                class="font-semibold text-xl tracking-tight bg-orange-500 border-2 border-black p-6 hover:bg-orange-400 rounded mx-1">Logout</a>
-            <a href="/profile"
-                class="font-semibold text-xl tracking-tight bg-orange-500 border-2 border-black p-6 hover:bg-orange-400 rounded mx-1">Profile</a>
+<body class="h-full m-0 p-0">
+    <div class="bg-gradient-to-br from-orange-600 to-fuchsia-400 p-3">
+        <nav class="flex flex-row items-center justify-center flex-wrap p-2 bg-white rounded">
+            <div class="">
+                <a class="font-semibold text-xl tracking-tight" href="/app/">Colorful.World</a>
+            </div>
+            <div class="grow flex flex-row justify-center self-center gap-2">
+                <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 hover:bg-gray-200"
+                    href="/app/">Feed</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 hover:bg-gray-200"
+                    href="/app/map/">Map</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 hover:bg-gray-200"
+                    href="#">Palet</a>
+            </div>
+            <div class="flex">
+                <div class="grow"></div>
+                <div class="place-self-end" @click.away="open=false" x-data="{open: false}">
+                    <button @click="open = !open"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                    </button>
+                    <div x-show="open" x-transition:enter="transition ease-out duration-100"
+                        x-transition:enter-start="transform opacity-0 scale-95"
+                        x-transition:enter-end="transform opacity-100 scale-100"
+                        x-transition:leave="transition ease-in duration-75"
+                        x-transition:leave-start="transform opacity-100 scale-100"
+                        x-transition:leave-end="transform opacity-0 scale-95"
+                        class="absolute z-10 right-2 w-full mt-3 origin-top-right rounded-md shadow-lg md:w-48">
+                        <div class="px-2 py-2 bg-white rounded-md shadow">
+                            <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+                                href="/logout/">Logout</a>
+                            <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+                                href="/profile/">Profile</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </nav>
     </div>
-    <div class="p-2">
+    <div class="p-3 h-full">
         {% block content %} {% endblock %}
     </div>
 </body>

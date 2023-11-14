@@ -1,5 +1,8 @@
 from datetime import datetime
 
+from dotenv import load_dotenv
+from os import getenv
+
 from flask import Response, jsonify, render_template, request
 from flask_login import current_user, login_required
 
@@ -7,6 +10,7 @@ import colorful.db as database
 
 from . import api_bp
 
+load_dotenv()
 
 @api_bp.post('/setStatus/')
 @login_required
@@ -62,3 +66,7 @@ def get_status_list():
             })
 
     return jsonify(stati)
+
+@api_bp.get('/loadmaps.js')
+def get_maps_source():
+    return Response(render_template('/script/loadmaps.js', api_key=getenv("MAPS_API_KEY")), mimetype="text/javascript")
