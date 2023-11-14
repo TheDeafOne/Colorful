@@ -30,6 +30,6 @@ class ProfileForm(FlaskForm):
                                  validators=[Optional()])
     new_password = PasswordField("New Password: ",
                                  validators=[Optional(), Length(min=8, max=256)])
-    confirm_new_password = PasswordField("New Password: ",
+    confirm_new_password = PasswordField("Confirm Password: ",
                                          validators=[Optional(), Length(min=8, max=256)])
-    submit = SubmitField("Register")
+    submit = SubmitField("Submit")
