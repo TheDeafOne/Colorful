@@ -4,6 +4,16 @@ Profile
 {% endblock %}
 {% block content %}
 
+<div class="container">
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning d-flex align-items-center alert-dismissible fade show">
+        <button type="button" class="close" data-bs-dismiss="alert">
+            &times;
+        </button>
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
 <section class="relative">
     <div class="container mx-auto px-4">
         <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg">
