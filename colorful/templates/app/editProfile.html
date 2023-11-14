@@ -3,6 +3,7 @@
 Profile
 {% endblock %}
 {% block content %}
+
 <section class="relative">
     <div class="container mx-auto px-4">
         <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg">
@@ -41,6 +42,16 @@ Profile
                         {{user.username}}
                     </h3>
                     <div class="mb-2 mt-10">He/Him
+                    </div>
+                    <div class="container">
+                        {% for message in get_flashed_messages() %}
+                        <div class="alert alert-warning d-flex align-items-center alert-dismissible fade show">
+                            <button type="button" class="close" data-bs-dismiss="alert">
+                                &times;
+                            </button>
+                            {{ message }}
+                        </div>
+                        {% endfor %}
                     </div>
                     <form class="bg-white rounded px-8 pt-6 pb-8 mb-4 flex justify-center flex-col items-center w-full"
                         method="POST">

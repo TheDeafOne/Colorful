@@ -18,39 +18,3 @@ def index():
 def get_about():
     return render_template("pub/about.html")
 
-
-@main_bp.get('/profile/')
-@main_bp.get('/profile/<string:id>/')
-def get_self_profile(id=None):
-    user_id = current_user.get_id() if not id else id
-    user = User.query.get(user_id)
-    if user:
-        return render_template("app/profile.html", user=user, is_same_user=user_id == current_user.get_id())
-    return render_template("noProfileFound.html")
-
-
-@main_bp.get('/edit-profile/')
-def get_edit_profile():
-    user = User.query.get(current_user.get_id())
-    form = ProfileForm()
-    return render_template("app/editProfile.html", user=user, form=form)
-
-
-@main_bp.post('/edit-profile/')
-def post_edit_profile():
-    form = ProfileForm()
-    if form.validate():
-        user: User = User.query.get(current_user.get_id())
-        if user.verify_password(form.old_password.data):
-            user.password = form.new_password.data
-
-            return redirect(url_for("main.get_profile"))
-        else:
-            print('old incorrect')
-            flash('Old Password Incorrect')
-            return redirect(url_for("main.get_edit_profile"))
-    else:
-        print('flashing')
-        for field, error in form.errors.items():
-            flash(f"{field}: {error}")
-        return redirect(url_for('main.get_edit_profile'))
