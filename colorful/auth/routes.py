@@ -1,13 +1,12 @@
-from . import auth_bp
 from flask import flash, redirect, render_template, request, url_for
 from flask_login import (LoginManager, current_user, login_required,
                          login_user, logout_user)
 
 # from colorful.db import User, db
 import colorful.db as database
-
 from colorful.forms import LoginForm, RegisterForm
 
+from . import auth_bp
 
 
 @auth_bp.get('/register/')
