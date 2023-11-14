@@ -98,7 +98,9 @@ async function displayStatusList() {
 
     for (user_status of stati) {
         const containerDiv = document.createElement("div")
-        containerDiv.className = `border-2 border-black p-4 bg-[${user_status.color}]`
+        containerDiv.className = "border-2 border-black p-4 rounded my-3"
+        containerDiv.style = `border-top:solid 0.5rem ${user_status.color};`
+        // containerDiv.className = `border-2 border-black p-4 bg-[${user_status.color}]`
         containerDiv.innerHTML = (
             `<span>${user_status.name}: ${user_status.status}</span>
              - <span>(${user_status.latitude}, ${user_status.longitude})</span>
