@@ -21,7 +21,7 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.Unicode, nullable=False)
     currentStatusID = db.Column(
-        db.Integer, db.ForeignKey("Status.id"), nullable=True)
+        db.Integer, db.ForeignKey("Status.id", name="fk_name_user_status"), nullable=True)
     email = db.Column(db.Unicode, nullable=False)
     # hash is a binary attribute
     password_hash = db.Column(db.LargeBinary)
@@ -57,7 +57,7 @@ class Status(db.Model):
     longitude = db.Column(db.Float, nullable=False)
     text = db.Column(db.Unicode, nullable=False)
     color = db.Column(db.Unicode, nullable=False)  # To implement with ML...
-    user = db.Column(db.Integer, db.ForeignKey("User.id"), nullable=False)
+    user = db.Column(db.Integer, db.ForeignKey("User.id", name="fk_name_status_user"), nullable=False)
     UserIsCurrentStatus = db.relationship(
         'User', foreign_keys='User.currentStatusID', backref='currentStatus')
 

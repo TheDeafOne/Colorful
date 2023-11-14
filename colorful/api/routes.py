@@ -26,7 +26,7 @@ def set_status():
         text=status,
         latitude=request.json['latitude'],
         longitude=request.json['longitude'],
-        color="White",
+        color= determineColor(status),
         user=user_id)
     database.db.session.add(dbStatus)
     database.db.session.commit()
@@ -37,6 +37,13 @@ def set_status():
     database.db.session.commit()
 
     return Response(status=200)
+
+def determineColor(status):
+
+    possibleColors = ["#FF0000","#00FF00","#0000FF"]
+    hashVal = hash(status)
+    color = possibleColors[hashVal % len(possibleColors)]
+    return color
 
 
 @api_bp.get('/getStatusList/')
