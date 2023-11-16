@@ -6,52 +6,7 @@ script.async = true;
 // prompted by your browser. If you see the error "The Geolocation service
 // failed.", it means you probably did not give permission for the browser to
 // locate you.
-let map, infoWindow;
-
-let styles;
-
-function initMap() {
-    map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: -34.397, lng: 150.644 },
-        zoom: 15,
-        styles: styles,
-        disableDefaultUI: true,
-    });
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const pos = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude,
-                };
-                map.setCenter(pos);
-            },
-            () => {
-                handleLocationError(true, infoWindow, map.getCenter());
-            },
-        );
-    } else {
-        // Browser doesn't support Geolocation
-        handleLocationError(false, infoWindow, map.getCenter());
-    }
-    const setStatusDiv = document.getElementById('setStatus');
-    setStatusDiv.classList.add("p-2","bg-white","text-lg","drop-shadow","rounded-sm","m-2");
-    map.controls[google.maps.ControlPosition.TOP_CENTER].push(setStatusDiv);
-    locationButton.addEventListener("click", () => {
-    });
-}
-
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-    infoWindow.setPosition(pos);
-    infoWindow.setContent(
-        browserHasGeolocation
-            ? "Error: The Geolocation service failed."
-            : "Error: Your browser doesn't support geolocation.",
-    );
-    infoWindow.open(map);
-}
-
-styles = [
+let styles = [
     {
         "featureType": "all",
         "elementType": "labels.text",
@@ -306,7 +261,19 @@ styles = [
     }
 ];
 
-window.initMap = initMap;
+function initMap() {
+    window.map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: 41.1604015, lng: -80.0865882 },
+        zoom: 15,
+        maxZoom: 16,
+        // styles: styles,
+        mapId: "da746550bcc7b014",
+        disableDefaultUI: true,
+    });
+    const mapCreated = new Event("mapCreated");
+    document.dispatchEvent(mapCreated);
+}
 
+window.initMap = initMap;
 
 document.head.appendChild(script);
