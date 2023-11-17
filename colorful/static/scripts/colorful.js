@@ -72,6 +72,15 @@ window.colorful = {};
         return responseJSON
     }
 
+    self.getColorName = (hexColor) => {
+        const map = {
+            "#FF0000": "red",
+            "#00FF00": "green",
+            "#0000FF": "blue"
+        }
+        return map[hexColor]
+    }
+
     const colorfulLoaded = new Event("colorfulLoaded")
     document.dispatchEvent(colorfulLoaded)
 })(window.colorful)

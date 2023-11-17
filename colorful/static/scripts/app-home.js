@@ -12,6 +12,8 @@ async function addStatus() {
 
     await colorful.setStatus(statusStr, latitude, longitude);
 
+    document.getElementById("setStatus-bar").value = ""
+
     // update status list
     await displayStatusList()
 }
@@ -24,8 +26,7 @@ async function displayStatusList() {
     for (user_status of stati) {
         console.log(user_status);
         const containerDiv = document.createElement("div")
-        containerDiv.className = "border-2 border-black p-4 rounded my-3"
-        containerDiv.style = `border-top:solid 0.5rem ${user_status.color};`
+        containerDiv.className = `bg-white drop-shadow p-4 rounded my-3 border-t-8 border-t-${colorful.getColorName(user_status.color)}-400`
         // containerDiv.className = `border-2 border-black p-4 bg-[${user_status.color}]`
         const statusSpan = document.createElement("span");
         statusSpan.innerText = `${user_status.name}: ${user_status.status} - (${user_status.latitude}, ${user_status.longitude}) - ${user_status.color}`
