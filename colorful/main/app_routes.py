@@ -29,9 +29,8 @@ def get_self_profile(id=None):
         user = User.query.get(user_id)
     else:
         user = User.query.filter_by(username=user_id).first()
-
     if user:
-        return render_template("app/profile.html", user=user, is_same_user=user.id == current_user.get_id())
+        return render_template("app/profile.html", user=user, is_same_user=user.id == int(current_user.get_id()))
 
     return render_template("app/noProfileFound.html")
 
