@@ -18,7 +18,7 @@ def _setup_login(app: Flask):
     login_manager.init_app(app)
 
     # function name of the route that has the login form (so it can redirect users)
-    login_manager.login_view = 'colorful.auth.get_login'  # type: ignore
+    login_manager.login_view = 'auth.get_login'  # type: ignore
 
     # function that takes a user id and
     @login_manager.user_loader
