@@ -23,14 +23,14 @@ def map_view():
 @main_bp.get('/profile/<string:id>/')
 def get_self_profile(id=None):
     user_id = current_user.get_id() if not id else id
-    user: User
+    other_user: User
     # get user by id or name
     if str(user_id).isnumeric():
-        user = User.query.get(user_id)
+        other_user = User.query.get(user_id)
     else:
-        user = User.query.filter_by(username=user_id).first()
-    if user:
-        return render_template("app/profile.html", user=user, is_same_user=user.id == int(current_user.get_id()))
+        other_user = User.query.filter_by(username=user_id).first()
+    if other_user:
+        return render_template("app/profile.html", other_user=other_user, current_user=User.query.get(user_id))
 
     return render_template("app/noProfileFound.html")
 

@@ -23,6 +23,7 @@ class User(UserMixin, db.Model):
     currentStatusID = db.Column(
         db.Integer, db.ForeignKey("Status.id", name="fk_name_user_status"), nullable=True)
     email = db.Column(db.Unicode, nullable=False)
+    num_followers = db.Column(db.Integer, nullable=False, default=0)
     # friends = db.Column
     # hash is a binary attribute
     password_hash = db.Column(db.LargeBinary)
@@ -58,7 +59,8 @@ class Status(db.Model):
     longitude = db.Column(db.Float, nullable=False)
     text = db.Column(db.Unicode, nullable=False)
     color = db.Column(db.Unicode, nullable=False)  # To implement with ML...
-    user = db.Column(db.Integer, db.ForeignKey("User.id", name="fk_name_status_user"), nullable=False)
+    user = db.Column(db.Integer, db.ForeignKey(
+        "User.id", name="fk_name_status_user"), nullable=False)
     UserIsCurrentStatus = db.relationship(
         'User', foreign_keys='User.currentStatusID', backref='currentStatus')
 
@@ -75,10 +77,9 @@ class Status(db.Model):
             'user': self.user,
         }
 
+
 class UserFollowers(db.Model):
     __tablename__ = 'User_Followers'
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, primary_key=True)
-    follower_id = db.Column(db.Integer, primary_key=True)
-
-
+    user_id = db.Column(db.Integer, nullable=False)
+    follower_id = db.Column(db.Integer, nullable=False)
