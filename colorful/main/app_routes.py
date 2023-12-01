@@ -13,6 +13,7 @@ def app_home():
     user = User.query.get(user_id)
     return render_template("app/home.html", current_user=current_user, user=user)
 
+
 @main_bp.get('/app/map/')
 def map_view():
     return render_template("app/map.html", current_user=current_user)
@@ -22,10 +23,17 @@ def map_view():
 @main_bp.get('/profile/<string:id>/')
 def get_self_profile(id=None):
     user_id = current_user.get_id() if not id else id
-    user = User.query.get(user_id)
+    user: User
+    # get user by id or name
+    if str(user_id).isnumeric():
+        user = User.query.get(user_id)
+    else:
+        user = User.query.filter_by(username=user_id).first()
+
     if user:
-        return render_template("app/profile.html", user=user, is_same_user=user_id == current_user.get_id())
-    return render_template("noProfileFound.html")
+        return render_template("app/profile.html", user=user, is_same_user=user.id == current_user.get_id())
+
+    return render_template("app/noProfileFound.html")
 
 
 @main_bp.get('/edit-profile/')
