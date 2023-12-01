@@ -23,6 +23,7 @@ class User(UserMixin, db.Model):
     currentStatusID = db.Column(
         db.Integer, db.ForeignKey("Status.id", name="fk_name_user_status"), nullable=True)
     email = db.Column(db.Unicode, nullable=False)
+    # friends = db.Column
     # hash is a binary attribute
     password_hash = db.Column(db.LargeBinary)
 
@@ -73,3 +74,11 @@ class Status(db.Model):
             'color': self.color,
             'user': self.user,
         }
+
+class UserFollowers(db.Model):
+    __tablename__ = 'User_Followers'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, primary_key=True)
+    follower_id = db.Column(db.Integer, primary_key=True)
+
+
