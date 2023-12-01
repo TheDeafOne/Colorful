@@ -89,5 +89,6 @@ def add_follower():
     )
     database.db.session.add(userFollower)
     database.User.query.get(other_id).num_followers += 1
+    database.User.query.get(current_user_id).num_following += 1
     database.db.session.commit()
     return Response(status=200)

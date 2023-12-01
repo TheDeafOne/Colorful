@@ -30,7 +30,7 @@ def get_self_profile(id=None):
     else:
         other_user = User.query.filter_by(username=user_id).first()
     if other_user:
-        return render_template("app/profile.html", other_user=other_user, current_user=User.query.get(user_id))
+        return render_template("app/profile.html", other_user=other_user, current_user=User.query.get(current_user.get_id()))
 
     return render_template("app/noProfileFound.html")
 
