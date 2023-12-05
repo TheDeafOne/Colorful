@@ -11,12 +11,12 @@ from . import main_bp
 def app_home():
     user_id = current_user.get_id()
     user = User.query.get(user_id)
-    return render_template("app/home.html", current_user=current_user, user=user)
+    return render_template("app/home.html", user=user)
 
 
 @main_bp.get('/app/map/')
 def map_view():
-    return render_template("app/map.html", current_user=current_user)
+    return render_template("app/map.html", user=current_user)
 
 
 @main_bp.get('/profile/')
@@ -30,7 +30,7 @@ def get_self_profile(id=None):
     else:
         other_user = User.query.filter_by(username=user_id).first()
     if other_user:
-        return render_template("app/profile.html", other_user=other_user, current_user=User.query.get(current_user.get_id()))
+        return render_template("app/profile.html", other_user=other_user, user=User.query.get(current_user.get_id()))
 
     return render_template("app/noProfileFound.html")
 

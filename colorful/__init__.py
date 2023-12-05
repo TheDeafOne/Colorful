@@ -41,7 +41,7 @@ def _setup_db(app: Flask):
                 users = [
                     database.User(username="UserA", email="a@a.a", password="12345678"),
                     database.User(username="UserB", email="b@b.b", password="12345678"),
-                    database.User(username="UserE", email="e@e.e", password="12345678")
+                    database.User(username="UserE", email="e@e.e", password="12345678", isAdmin=True)
                 ]
                 database.db.session.add_all(users)
                 database.db.session.commit()
