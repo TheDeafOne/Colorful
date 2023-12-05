@@ -1,7 +1,7 @@
 from flask import flash, redirect, render_template, url_for
 from flask_login import current_user
 
-from colorful.db import User, db
+from colorful.db import User, UserFollowers, db
 from colorful.forms import ProfileForm
 
 from . import main_bp
@@ -29,8 +29,17 @@ def get_self_profile(id=None):
         other_user = User.query.get(user_id)
     else:
         other_user = User.query.filter_by(username=user_id).first()
+
     if other_user:
-        return render_template("app/profile.html", other_user=other_user, user=User.query.get(current_user.get_id()))
+        other_user_following: list[UserFollowers] = UserFollowers.query.filter_by(follower_id=other_user.id)
+        other_user_followers: list[UserFollowers] = UserFollowers.query.filter_by(user_id=other_user.id)
+        return render_template(
+            "app/profile.html", 
+            other_user=other_user, 
+            user=User.query.get(current_user.get_id()), 
+            other_user_followers=other_user_followers,
+            other_user_following=other_user_following
+        )
 
     return render_template("app/noProfileFound.html")
 
