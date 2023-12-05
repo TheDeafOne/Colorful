@@ -88,7 +88,17 @@ def add_follower():
         follower_id=int(user_id)
     )
     database.db.session.add(userFollower)
-    database.User.query.get(other_id).num_followers += 1
-    database.User.query.get(current_user_id).num_following += 1
     database.db.session.commit()
     return Response(status=200)
+
+@login_required
+@api_bp.post('/removeFollower/')
+def removeFollower():
+    print('not finished')
+    # user_id = request.json.get("self")
+    # other_id = request.json.get("other")
+    # current_user_id = current_user.get_id()
+    # if (user_id != current_user_id or other_id == current_user_id):
+    #     abort(403)
+    
+

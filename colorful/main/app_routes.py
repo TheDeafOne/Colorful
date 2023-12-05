@@ -31,12 +31,14 @@ def get_self_profile(id=None):
         other_user = User.query.filter_by(username=user_id).first()
 
     if other_user:
-        other_user_following: list[UserFollowers] = UserFollowers.query.filter_by(follower_id=other_user.id)
-        other_user_followers: list[UserFollowers] = UserFollowers.query.filter_by(user_id=other_user.id)
+        other_user_following: list[UserFollowers] = UserFollowers.query.filter_by(
+            follower_id=other_user.id).all()
+        other_user_followers: list[UserFollowers] = UserFollowers.query.filter_by(
+            user_id=other_user.id).all()
         return render_template(
-            "app/profile.html", 
-            other_user=other_user, 
-            user=User.query.get(current_user.get_id()), 
+            "app/profile.html",
+            other_user=other_user,
+            user=User.query.get(current_user.get_id()),
             other_user_followers=other_user_followers,
             other_user_following=other_user_following
         )

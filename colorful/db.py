@@ -24,8 +24,6 @@ class User(UserMixin, db.Model):
         db.Integer, db.ForeignKey("Status.id", name="fk_name_user_status"), nullable=True)
     email = db.Column(db.Unicode, nullable=False)
     isAdmin = db.Column(db.Boolean, default=False)
-    num_followers = db.Column(db.Integer, nullable=False, default=0)
-    num_following = db.Column(db.Integer, nullable=False, default=0)
     # friends = db.Column
     # hash is a binary attribute
     password_hash = db.Column(db.LargeBinary)
