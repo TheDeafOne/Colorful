@@ -15,7 +15,7 @@ async function post_friend_follow(self_id, other_id) {
         })
     })
     if (response.ok) {
-        console.log("use ajax to change following amount")
+        window.location.reload();
     }
 }
 
@@ -32,6 +32,6 @@ async function post_friend_unfollow(self_id, other_id) {
         })
     })
     if (response.ok) {
-        console.log("use ajax to change following amount")
+        window.location.reload();
     }
 }
