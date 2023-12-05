@@ -55,7 +55,17 @@ def get_status_list():
     stati = []
     user: database.User
     for user in users:
-        if user.currentStatusID:
+        if user.isMuted:
+            status = database.Status.query.get(user.currentStatusID)    
+            stati.append({
+                'name': user.username,
+                'status': "Muted",
+                'color': "#000000",
+                'longitude': status.longitude,
+                'latitude': status.latitude,
+                'time': status.time
+            })
+        elif user.currentStatusID:
             status = database.Status.query.get(user.currentStatusID)
             stati.append({
                 'name': user.username,
@@ -90,5 +100,40 @@ def add_follower():
     database.db.session.add(userFollower)
     database.User.query.get(other_id).num_followers += 1
     database.User.query.get(current_user_id).num_following += 1
+    database.db.session.commit()
+    return Response(status=200)
+
+
+# If this were actually in production, I would put the effort into removing user's sensitive data, ie. location
+# But it's not so the admins can have access to it if they Reallly care
+@api_bp.get('/getUsersList/')
+@login_required
+def get_user_list():
+    user = database.User.query.get(current_user.get_id())
+    if(user.isAdmin):
+        users = database.User.query.all()
+        outputUsers = []
+        for u in users:
+            userJSON = u.to_json()
+            curStatus = database.Status.query.get(u.currentStatusID)
+            userJSON["status"] = curStatus.to_json()
+            outputUsers.append(userJSON)
+
+        return jsonify(outputUsers)
+    else:
+        abort(403)
+
+
+@api_bp.post('/toggleMuteForUser/')
+@login_required
+def toggle_mute():
+    user_id = request.json.get("user")
+    user = database.User.query.get(user_id)
+    admin = database.User.query.get(current_user.get_id())
+    if (not admin.isAdmin or user.isAdmin):
+        abort(403)
+    user.isMuted = not user.isMuted
+
+    database.db.session.add(user)
     database.db.session.commit()
     return Response(status=200)
