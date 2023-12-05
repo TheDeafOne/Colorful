@@ -1,4 +1,4 @@
-from flask import flash, redirect, render_template, url_for
+from flask import flash, redirect, render_template, url_for, abort
 from flask_login import current_user
 
 from colorful.db import User, db
@@ -85,3 +85,11 @@ def post_edit_profile():
         for field, error in form.errors.items():
             flash(f"{field}: {error}")
         return redirect(url_for('main.get_edit_profile'))
+
+@main_bp.get('/admin/')
+def admin_portal():
+    user = User.query.get(current_user.get_id())
+    if(user.isAdmin):
+        return render_template("app/adminPortal.html", user=user)
+    else:
+        abort(403)

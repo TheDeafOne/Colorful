@@ -92,3 +92,20 @@ def add_follower():
     database.User.query.get(current_user_id).num_following += 1
     database.db.session.commit()
     return Response(status=200)
+
+@api_bp.get('/getUsersList/')
+@login_required
+def get_user_list():
+    user = database.User.query.get(current_user.get_id())
+    if(user.isAdmin):
+        users = database.User.query.all()
+        outputUsers = []
+        for u in users:
+            userJSON = u.to_json()
+            curStatus = database.Status.query.get(u.currentStatusID)
+            userJSON["status"] = curStatus.to_json()
+            outputUsers.append(userJSON)
+            
+        return jsonify(outputUsers)
+    else:
+        abort(403)

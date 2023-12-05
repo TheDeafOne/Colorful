@@ -43,7 +43,7 @@ class User(UserMixin, db.Model):
     def verify_password(self, pwd: str) -> bool:
         return password_hasher.check(pwd, self.password_hash)
 
-    def serialize(self):
+    def to_json(self):
         """Return object data in easily serializable format"""
         return {
             'id': self.id,
@@ -66,8 +66,7 @@ class Status(db.Model):
     UserIsCurrentStatus = db.relationship(
         'User', foreign_keys='User.currentStatusID', backref='currentStatus')
 
-    @property
-    def serialize(self):
+    def to_json(self):
         """Return object data in easily serializable format"""
         return {
             'id': self.id,
