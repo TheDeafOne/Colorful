@@ -1,5 +1,6 @@
 document.addEventListener("colorfulLoaded", async () => {
     displayStatusList();
+    colorful.getLocation()
 
     // TODO: add an event listener to call search when the button is clicked
     const button = document.getElementById("setStatus-button");
@@ -8,8 +9,7 @@ document.addEventListener("colorfulLoaded", async () => {
 
 async function addStatus() {
     const statusStr = document.getElementById("setStatus-bar").value
-    const { latitude, longitude } = await colorful.getGeolocationData();
-
+    const { latitude, longitude } = await colorful.getLocation();
     await colorful.setStatus(statusStr, latitude, longitude);
 
     document.getElementById("setStatus-bar").value = ""
@@ -24,7 +24,7 @@ async function displayStatusList() {
     statusList.innerHTML = ""
 
     for (user_status of stati) {
-        console.log(user_status);
+        // console.log(user_status);
         const containerDiv = document.createElement("div")
         containerDiv.className = `bg-white drop-shadow p-4 rounded my-3 border-t-8 border-t-${colorful.getColorName(user_status.color)}-400`
         // containerDiv.className = `border-2 border-black p-4 bg-[${user_status.color}]`
