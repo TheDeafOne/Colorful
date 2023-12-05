@@ -91,14 +91,16 @@ def add_follower():
     database.db.session.commit()
     return Response(status=200)
 
+
 @login_required
 @api_bp.post('/removeFollower/')
 def removeFollower():
-    print('not finished')
-    # user_id = request.json.get("self")
-    # other_id = request.json.get("other")
-    # current_user_id = current_user.get_id()
-    # if (user_id != current_user_id or other_id == current_user_id):
-    #     abort(403)
-    
-
+    user_id = request.json.get("self")
+    other_id = request.json.get("other")
+    current_user_id = current_user.get_id()
+    if (user_id != current_user_id or other_id == current_user_id):
+        abort(403)
+    # remove this user as a follower to the other user
+    database.UserFollowers.query.filter_by(user_id=other_id).delete()
+    database.db.session.commit()
+    return Response(status=200)

@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 async function post_friend_follow(self_id, other_id) {
     const url = '/api/addFollower/'
-    await fetch(url, {
+    let response = await fetch(url, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -14,8 +14,24 @@ async function post_friend_follow(self_id, other_id) {
             "other": other_id
         })
     })
+    if (response.ok) {
+        console.log("use ajax to change following amount")
+    }
 }
 
-async function test(value) {
-    console.log(value);
+async function post_friend_unfollow(self_id, other_id) {
+    const url = '/api/removeFollower/'
+    let response = await fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            "self": self_id,
+            "other": other_id
+        })
+    })
+    if (response.ok) {
+        console.log("use ajax to change following amount")
+    }
 }
