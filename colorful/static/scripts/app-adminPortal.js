@@ -7,12 +7,9 @@ async function displayUserList(){
     const response = await fetch(url)
     const responseJSON = await response.json()
 
-    console.log(responseJSON)
-
     const usersList = document.getElementById("users-list")
     usersList.innerHTML = ""
     for (user of responseJSON) {
-        console.log(user);
         const containerDiv = document.createElement("div")
         containerDiv.className = `bg-white drop-shadow p-4 rounded my-3 flex justify-between`
 
@@ -27,7 +24,6 @@ async function displayUserList(){
         const controlsDiv = document.createElement("div")
         const muteButton = document.createElement("button")
         muteButton.setAttribute("userID", user.id)
-        console.log(user.isMuted)
         if(user.isMuted == false){
             muteButton.innerText = "Mute User"
             muteButton.className = "bg-gray-300 active:bg-gray-700 p-1 hover:bg-gray-400 rounded-sm"
