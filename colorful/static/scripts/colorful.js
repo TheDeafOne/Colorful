@@ -27,7 +27,6 @@ window.colorful = {};
                 navigator.geolocation.getCurrentPosition(function (position) {
                     lat = position.coords.latitude
                     long = position.coords.longitude
-
                     // pass the values to the resolve function, which lets us access the location data in addStatus
                     resolve({
                         latitude: lat,
@@ -37,7 +36,7 @@ window.colorful = {};
                     (reject) => {
                         // user disabled specific geolocation, so set geolocation method to general
                         console.log(reject);
-                        geolocationMethod = 'GENERAL'
+                        self.geolocationMethod = 'GENERAL'
                     }
                 )
 
