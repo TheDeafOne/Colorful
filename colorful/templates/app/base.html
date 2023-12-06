@@ -37,11 +37,11 @@
                 <div class="fixed inset-0 z-30 flex items-center justify-center overflow-auto bg-black bg-opacity-50"
                     x-show="showModal">
                     <!-- Modal inner -->
-                    <div class="w-1/2 h-1/2 px-6 py-4 mx-auto text-left bg-white rounded shadow-lg"
+                    <div class="lg:w-1/4 lg:h-1/2 md:w-1/2 sm:w-3/4 sm:h-4/5 px-6 py-4 mx-auto text-left bg-white rounded shadow-lg"
                         @click.away="showModal = false" x-transition:enter="motion-safe:ease-out duration-300"
                         x-transition:enter-start="opacity-0 scale-90" x-transition:enter-end="opacity-100 scale-100">
                         <!-- Title / Close-->
-                        <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center float-right mb-2">
                             <button type="button" class="z-50 cursor-pointer" @click="showModal = false">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor">
