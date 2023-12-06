@@ -126,6 +126,7 @@ def searchUser():
         {
             "username": user.username,
             "status": color.color if (color := database.Status.query.get(user.currentStatusID)) else '#000'
+            
         }
         for user in similar_users
     ]
