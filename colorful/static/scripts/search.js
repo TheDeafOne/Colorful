@@ -27,7 +27,7 @@ async function get_users() {
         textContainer.appendChild(noUsersText);
         listElement.appendChild(textContainer);
     }
-
+    
     // add user card for each user with a username similar to the given query
     for (user of users) {
         // make user container div redirect to user profile
