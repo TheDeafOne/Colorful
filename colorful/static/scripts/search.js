@@ -16,7 +16,7 @@ async function get_users() {
 
     // get empty user list container
     const listElement = document.getElementById("search-results-list");
-    listElement.innerHTML = ""
+    clearSearchList();
 
     // handle no users
     if (users.length == 0) {
@@ -42,4 +42,10 @@ async function get_users() {
 
     // clear search bar
     document.getElementById("user-search").value = ""
+}
+
+function clearSearchList() {
+    // get empty user list container
+    const listElement = document.getElementById("search-results-list");
+    listElement.innerHTML = ""
 }

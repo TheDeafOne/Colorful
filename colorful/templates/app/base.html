@@ -31,7 +31,7 @@
             </div>
             <div x-data="{ 'showModal': false }" @keydown.escape="showModal = false">
                 <!-- Trigger for Modal -->
-                <button type="button" @click="showModal = true">
+                <button type="button" @click="showModal = true; clearSearchList();">
                     <img class="h-8 w-8 mr-2 mt-2" src="../../static/images/search-icon.svg" alt="user search icon">
                 </button>
 
