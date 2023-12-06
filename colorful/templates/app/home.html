@@ -10,7 +10,12 @@
 Colorful - Home
 {% endblock %}
 {% block content %}
-<h1 class="text-3xl py-2 font-medium">Feeling colorful,  <span class="not-italic font-bold">{{user.username}}</span> ?</h1>
+<h1 class="text-3xl py-2 font-medium">Feeling colorful,  <span class="not-italic font-bold">{{user.username}}</span>?
+{%if user is not none and user.isMuted%}
+&nbsp;
+<span class="italic font-bold">You are muted</span>
+{%endif%}
+</h1>
 <div class="flex w-full gap-2">
     <input id="setStatus-bar" class="grow bg-gray-200 shadow-inner rounded-md p-2 placeholder:italic" type="text" placeholder="How are you feeling?" name="query">
     <button id="setStatus-button" class="bg-gradient-to-br from-orange-600 to-orange-400 text-white drop-shadow p-2 hover:drop-shadow-md rounded" type="button"> Set Status </button>
