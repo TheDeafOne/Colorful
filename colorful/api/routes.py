@@ -56,7 +56,7 @@ def get_status_list():
     user: database.User
     for user in users:
         if user.isMuted:
-            status = database.Status.query.get(user.currentStatusID)    
+            status = database.Status.query.get(user.currentStatusID)
             stati.append({
                 'name': user.username,
                 'status': "Muted",
@@ -125,22 +125,21 @@ def searchUser():
     similar_users: list = [
         {
             "username": user.username,
-            "color": database.Status.query.get(user.currentStatusID).color
+            "status": color.color if (color := database.Status.query.get(user.currentStatusID)) else '#000'
         }
         for user in similar_users
     ]
     return jsonify(similar_users)
 
 
-
 # If this were actually in production, I would put the effort into removing user's sensitive data, ie. location
 # But it's not so the admins can have access to it if they Reallly care
-#TODO: integrate user search for better admin experience
+# TODO: integrate user search for better admin experience
 @login_required
 @api_bp.get('/getUsersList/')
 def get_user_list():
     user = database.User.query.get(current_user.get_id())
-    if(user.isAdmin):
+    if (user.isAdmin):
         users = database.User.query.all()
         outputUsers = []
         for u in users:
