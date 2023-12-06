@@ -24,6 +24,7 @@ class User(UserMixin, db.Model):
         db.Integer, db.ForeignKey("Status.id", name="fk_name_user_status"), nullable=True)
     email = db.Column(db.Unicode, nullable=False)
     isAdmin = db.Column(db.Boolean, default=False)
+    isMuted = db.Column(db.Boolean, default=False)
     # friends = db.Column
     # hash is a binary attribute
     password_hash = db.Column(db.LargeBinary)
@@ -41,13 +42,15 @@ class User(UserMixin, db.Model):
     def verify_password(self, pwd: str) -> bool:
         return password_hasher.check(pwd, self.password_hash)
 
-    def serialize(self):
+    def to_json(self):
         """Return object data in easily serializable format"""
         return {
             'id': self.id,
             'username': self.username,
             'currentStatusId': self.currentStatusID,
             'email': self.email,
+            'isAdmin': self.isAdmin,
+            'isMuted': self.isMuted,
         }
 
 
@@ -64,8 +67,7 @@ class Status(db.Model):
     UserIsCurrentStatus = db.relationship(
         'User', foreign_keys='User.currentStatusID', backref='currentStatus')
 
-    @property
-    def serialize(self):
+    def to_json(self):
         """Return object data in easily serializable format"""
         return {
             'id': self.id,
