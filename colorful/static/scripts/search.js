@@ -27,15 +27,19 @@ async function get_users() {
         textContainer.appendChild(noUsersText);
         listElement.appendChild(textContainer);
     }
-    
+
     // add user card for each user with a username similar to the given query
-    for (user of users) {
+    for (other_user of users) {
         // make user container div redirect to user profile
         const containerDiv = document.createElement("div")
-        containerDiv.addEventListener("click", () => window.location.href = `/profile/${user.username}`)
-        containerDiv.className = `bg-white drop-shadow p-4 rounded my-3 border-t-8 border-t-${colorful.getColorName(user.color)}-400 cursor-pointer`
+        containerDiv.value = other_user.username;
+        containerDiv.addEventListener("click", (e) => {
+            window.location.href = `/profile/${e.target.value}`
+        })
+        containerDiv.className = `bg-white drop-shadow p-4 rounded my-3 border-t-8 border-t-${colorful.getColorName(other_user.color)}-400 cursor-pointer`
         const statusSpan = document.createElement("span");
-        statusSpan.innerText = user.username;
+        statusSpan.classList.add('pointer-events-none')
+        statusSpan.innerText = other_user.username;
         containerDiv.appendChild(statusSpan);
         listElement.appendChild(containerDiv);
     }

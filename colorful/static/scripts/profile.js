@@ -1,7 +1,3 @@
-document.addEventListener("DOMContentLoaded", async () => {
-    document.getElementById("")
-});
-
 async function post_friend_follow(self_id, other_id) {
     const url = '/api/addFollower/'
     let response = await fetch(url, {
