@@ -104,3 +104,19 @@ def removeFollower():
     database.UserFollowers.query.filter_by(user_id=other_id).delete()
     database.db.session.commit()
     return Response(status=200)
+
+
+@login_required
+@api_bp.get('/searchUser/')
+def searchUser():
+    query = request.args.get("query")
+    similar_users: list[database.User] = database.User.query.filter(
+        database.User.username.like('%' + query + '%')).all()
+    similar_users: list = [
+        {
+            "username": user.username,
+            "color": database.Status.query.get(user.currentStatusID).color
+        }
+        for user in similar_users
+    ]
+    return jsonify(similar_users)
