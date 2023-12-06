@@ -20,9 +20,12 @@ async function get_users() {
 
     // handle no users
     if (users.length == 0) {
+        const textContainer = document.createElement('div');
+        textContainer.className = 'mt-10 flex align-center justify-center'
         const noUsersText = document.createElement("span");
         noUsersText.innerText = `No user with the name '${query}' found.`
-        listElement.appendChild(noUsersText);
+        textContainer.appendChild(noUsersText);
+        listElement.appendChild(textContainer);
     }
 
     // add user card for each user with a username similar to the given query
