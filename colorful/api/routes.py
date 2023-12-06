@@ -56,7 +56,7 @@ def get_status_list():
     user: database.User
     for user in users:
         if user.isMuted:
-            status = database.Status.query.get(user.currentStatusID)    
+            status = database.Status.query.get(user.currentStatusID)
             stati.append({
                 'name': user.username,
                 'status': "Muted",
@@ -116,13 +116,31 @@ def removeFollower():
     return Response(status=200)
 
 
+@login_required
+@api_bp.get('/searchUser/')
+def searchUser():
+    query = request.args.get("query")
+    similar_users: list[database.User] = database.User.query.filter(
+        database.User.username.like('%' + query + '%')).all()
+    similar_users: list = [
+        {
+            "username": user.username,
+            "color": color.color if (color := database.Status.query.get(user.currentStatusID)) else '#000'
+
+        }
+        for user in similar_users
+    ]
+    return jsonify(similar_users)
+
+
 # If this were actually in production, I would put the effort into removing user's sensitive data, ie. location
 # But it's not so the admins can have access to it if they Reallly care
-@api_bp.get('/getUsersList/')
+# TODO: integrate user search for better admin experience
 @login_required
+@api_bp.get('/getUsersList/')
 def get_user_list():
     user = database.User.query.get(current_user.get_id())
-    if(user.isAdmin):
+    if (user.isAdmin):
         users = database.User.query.all()
         outputUsers = []
         for u in users:
@@ -136,8 +154,8 @@ def get_user_list():
         abort(403)
 
 
-@api_bp.post('/toggleMuteForUser/')
 @login_required
+@api_bp.post('/toggleMuteForUser/')
 def toggle_mute():
     user_id = request.json.get("user")
     user = database.User.query.get(user_id)
