@@ -77,6 +77,16 @@ def _setup_db(app: Flask):
                 database.db.session.add_all(users)
                 database.db.session.commit()
 
+                followers = [
+                    database.UserFollowers(user_id=users[0].id, follower_id=users[2].id),
+                    database.UserFollowers(user_id=users[0].id, follower_id=users[1].id),
+                    database.UserFollowers(user_id=users[1].id, follower_id=users[0].id),
+                    database.UserFollowers(user_id=users[2].id, follower_id=users[1].id),
+                ]
+                
+                database.db.session.add_all(followers)
+                database.db.session.commit()
+
                 print("Database Loaded")
             except:
                 print("Database Re-Population Failed")

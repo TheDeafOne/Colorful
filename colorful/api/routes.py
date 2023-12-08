@@ -79,6 +79,38 @@ def get_status_list():
     return jsonify(stati)
 
 
+@api_bp.get('/getFriendsStatusList/<int:user_id>/')
+@login_required
+def get_friends_status_list(user_id: int):
+    friends_ids = [friend.user_id for friend in database.UserFollowers.query.filter_by(follower_id=user_id)]
+    users = database.User.query.filter(database.User.id.in_(friends_ids)).all()
+
+    stati = []
+    user: database.User
+    for user in users:
+        if user.isMuted:
+            status = database.Status.query.get(user.currentStatusID)
+            stati.append({
+                'name': user.username,
+                'status': "Muted",
+                'color': "#000000",
+                'longitude': status.longitude,
+                'latitude': status.latitude,
+                'time': status.time
+            })
+        elif user.currentStatusID:
+            status = database.Status.query.get(user.currentStatusID)
+            stati.append({
+                'name': user.username,
+                'status': status.text,
+                'color': status.color,
+                'longitude': status.longitude,
+                'latitude': status.latitude,
+                'time': status.time
+            })
+
+    return jsonify(stati)
+
 @api_bp.get('/loadmaps.js')
 def get_maps_source():
     return Response(render_template('/script/loadmaps.js', api_key=getenv("MAPS_API_KEY")), mimetype="text/javascript")

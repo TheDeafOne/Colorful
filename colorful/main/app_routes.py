@@ -1,7 +1,7 @@
 from flask import flash, redirect, render_template, url_for, abort
 from flask_login import current_user
 
-from colorful.db import User, UserFollowers, db
+from colorful.db import User, UserFollowers, db, Status
 from colorful.forms import ProfileForm
 
 from . import main_bp
@@ -104,3 +104,11 @@ def admin_portal():
         return render_template("app/adminPortal.html", user=user)
     else:
         abort(403)
+        
+        
+@main_bp.get("/app/grid/")
+def get_friends_grid():
+    user = User.query.get(current_user.get_id())
+    return render_template("app/grid.html", user=user)
+    
+    
