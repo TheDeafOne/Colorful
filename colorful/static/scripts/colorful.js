@@ -71,6 +71,14 @@ window.colorful = {};
         return responseJSON
     }
 
+    self.getFriendsStatusList = async (user_id) => {
+        const url = `/api/getFriendsStatusList/${user_id}/`
+        const response = await fetch(url)
+        const responseJSON = await response.json()
+
+        return responseJSON
+    }
+
     self.getColorName = (hexColor) => {
         const map = {
             "#FF0000": "red",

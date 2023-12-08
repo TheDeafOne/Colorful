@@ -1,0 +1,11 @@
+{% extends 'app/base.html' %}
+{% block head %}
+<script src="/static/scripts/app-grid.js" type="text/javascript"></script>
+{% endblock %}
+{% block title %}
+Colorful - Grid
+{% endblock %}
+{% block content %}
+<input id="user_id" class="hidden" value={{user.id}}>
+<div id="container" class="grid gap-4"></div>
+{% endblock%}
