@@ -35,12 +35,14 @@ def get_self_profile(id=None):
             follower_id=other_user.id).all()
         other_user_followers: list[UserFollowers] = UserFollowers.query.filter_by(
             user_id=other_user.id).all()
+        num_statuses = len(Status.query.filter_by(user=user_id).all())
         return render_template(
             "app/profile.html",
             other_user=other_user,
             user=User.query.get(current_user.get_id()),
             other_user_followers=other_user_followers,
-            other_user_following=other_user_following
+            other_user_following=other_user_following,
+            num_statuses=num_statuses
         )
 
     return render_template("app/noProfileFound.html")
