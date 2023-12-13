@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import base64
 
 from dotenv import load_dotenv
 from flask import current_app
@@ -13,6 +14,7 @@ from colorful.auth.hasher import UpdatedHasher
 load_dotenv()
 db = SQLAlchemy()
 pepper_key = os.getenv('PEPPER_KEY')
+pepper_key += '='
 password_hasher = UpdatedHasher(pepper_key=pepper_key)
 
 

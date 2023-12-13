@@ -21,7 +21,7 @@ window.colorful = {};
 
     // adapted from https://stackoverflow.com/a/66259340/10181378
     self.getGeolocationData = () => {
-        return  new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
             // use built in geolocation function to get location of user
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function (position) {
@@ -81,9 +81,14 @@ window.colorful = {};
 
     self.getColorName = (hexColor) => {
         const map = {
-            "#FF0000": "red",
-            "#00FF00": "green",
-            "#0000FF": "blue"
+            "#FF0000": 'red',
+            "#FF8888": 'pink',
+            "#00FF00": 'green',
+            "#000000": 'slate',
+            "#FFFF00": 'yellow',
+            "#0000FF": 'blue',
+            "#FF8800": 'orange',
+            "#333300": 'amber'
         }
         return map[hexColor]
     }
