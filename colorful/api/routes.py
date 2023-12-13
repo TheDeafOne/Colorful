@@ -6,6 +6,7 @@ from flask import Response, abort, jsonify, render_template, request
 from flask_login import current_user, login_required
 
 import colorful.db as database
+import colorful.color_map as cm
 
 from . import api_bp
 
@@ -40,10 +41,8 @@ def set_status():
 
 
 def determineColor(status):
-
-    possibleColors = ["#FF0000", "#00FF00", "#0000FF"]
-    hashVal = hash(status)
-    color = possibleColors[hashVal % len(possibleColors)]
+    color = cm.color_map[cm.get_text_emotion(status)]
+    print(color)
     return color
 
 
