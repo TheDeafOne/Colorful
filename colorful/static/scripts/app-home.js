@@ -4,15 +4,21 @@ document.addEventListener("colorfulLoaded", async () => {
 
     // TODO: add an event listener to call search when the button is clicked
     const button = document.getElementById("setStatus-button");
+    const bar = document.getElementById("setStatus-bar");
+    bar.addEventListener("keydown", (e) => {
+        if (e.code === "Enter") {
+            bar.value = "";
+        }
+    })
     button.addEventListener("click", addStatus);
 });
 
 async function addStatus() {
     const statusStr = document.getElementById("setStatus-bar").value
     const { latitude, longitude } = await colorful.getLocation();
+    document.getElementById("setStatus-bar").value = ""
     await colorful.setStatus(statusStr, latitude, longitude);
 
-    document.getElementById("setStatus-bar").value = ""
 
     // update status list
     await displayStatusList()
