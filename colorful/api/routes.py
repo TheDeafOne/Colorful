@@ -53,7 +53,6 @@ def get_status_list():
     stati = []
     user: database.User
     for user in users:
-        print(user.to_json())
         if user.isMuted:
             status = database.Status.query.get(user.currentStatusID)
             stati.append({

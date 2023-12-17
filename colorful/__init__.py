@@ -61,9 +61,9 @@ def _add_test_stati(users: list[database.User]):
     for user in users:
         for i in range(random.randint(1,5)):
             random_datetime = f'{random.randint(2019,2023)}-{random.randint(1,12)}-{random.randint(1,28)} {random.randint(0,23)}:{random.randint(0,59)}:21.240752'
-            random_text = ' '.join([str(random_word_set[random.randint(0, len(random_word_set)-1)]) for _ in range(random.randint(3, 10))])
+            random_text = ' '.join([str(random_word_set[random.randint(0, len(random_word_set)-1)]).replace("'b",'').replace("'",'') for _ in range(random.randint(3, 10))])
             random_lat, random_long = _generate_coordinate()
-            random_color = str(hex(random.randrange(0, 2**24)))
+            random_color = '#' + str(hex(random.randrange(0, 2**24)))[2:]
             new_random_status = database.Status(
                 time=random_datetime,
                 text=random_text,
@@ -78,7 +78,11 @@ def _add_test_stati(users: list[database.User]):
     database.db.session.add_all(stati)
     database.db.session.commit()
 
+    for user in users:
+        user.currentStatusID = list(filter(lambda status: status.user == user.id, stati))[-1].id
     
+    database.db.session.add_all(users)
+    database.db.session.commit()
 
 def _add_test_followers(users: list[database.User]):
     followers = []
