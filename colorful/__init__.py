@@ -1,22 +1,20 @@
 import os
-
-from flask import Flask
-from flask_login import LoginManager
-import requests
 import random
 import string
 import urllib.request
 
+import requests
+from flask import Flask
+from flask_login import LoginManager
 
-
+import colorful.db as database
 from colorful.api import api_bp
 from colorful.auth import auth_bp
 from colorful.main import main_bp
 
-import colorful.db as database
-
 scriptdir = os.path.dirname(os.path.abspath(__file__))
 dbfile = os.path.join(scriptdir, "users.sqlite3")
+
 
 def _setup_login(app: Flask):
     # Prepare and connect the LoginManager to this app
@@ -30,9 +28,11 @@ def _setup_login(app: Flask):
     @login_manager.user_loader
     def load_user(uid: int) -> database.User:
         return database.User.query.get(int(uid))  # type: ignore
-    
+
+
 def random_char(char_num):
     return ''.join(random.choice(string.ascii_letters) for _ in range(char_num))
+
 
 def _add_test_users(num_users: int):
     users = []
@@ -40,16 +40,19 @@ def _add_test_users(num_users: int):
         print(f'\ruser {i}')
         random_username = random_char(8)
         random_email = random_username+"@gmail.com"
-        user = database.User(username=random_username, email=random_email, password=random_username)
+        user = database.User(username=random_username,
+                             email=random_email, password=random_username)
         users.append(user)
     database.db.session.add_all(users)
     database.db.session.commit()
     return users
 
+
 def _generate_coordinate():
     latitude = random.uniform(-60, 60)
     longitude = random.uniform(-120, 120)
     return latitude, longitude
+
 
 def _add_test_stati(users: list[database.User]):
     word_site = "https://www.mit.edu/~ecprice/wordlist.10000"
@@ -58,11 +61,13 @@ def _add_test_stati(users: list[database.User]):
     stati = []
     # generate random number of statuses per user
     for user in users:
-        for i in range(random.randint(1,5)):
+        for i in range(random.randint(1, 5)):
             random_datetime = f'{random.randint(2019,2023)}-{random.randint(1,12)}-{random.randint(1,28)} {random.randint(0,23)}:{random.randint(0,59)}:21.240752'
-            random_text = ' '.join([str(random_word_set[random.randint(0, len(random_word_set)-1)]).replace("'b",'').replace("'",'')[1:] for _ in range(random.randint(3, 10))])
+            random_text = ' '.join([str(random_word_set[random.randint(0, len(
+                random_word_set)-1)]).replace("'b", '').replace("'", '')[1:] for _ in range(random.randint(3, 10))])
             random_lat, random_long = _generate_coordinate()
-            random_color = '#' + str(hex(random.randrange(0, 2**24)))[2:].upper()
+            random_color = '#' + \
+                str(hex(random.randrange(0, 2**24)))[2:].upper()
             new_random_status = database.Status(
                 time=random_datetime,
                 text=random_text,
@@ -78,21 +83,25 @@ def _add_test_stati(users: list[database.User]):
     database.db.session.commit()
 
     for user in users:
-        user.currentStatusID = list(filter(lambda status: status.user == user.id, stati))[-1].id
-    
+        user.currentStatusID = list(
+            filter(lambda status: status.user == user.id, stati))[-1].id
+
     database.db.session.add_all(users)
     database.db.session.commit()
+
 
 def _add_test_followers(users: list[database.User]):
     followers = []
     for user in users:
-        # random number of followers 
-        for _ in range(random.randint(0,len(users)-1)):
+        # random number of followers
+        for _ in range(random.randint(0, len(users)-1)):
             random_id = users[random.randint(0, len(users)-1)].id
-            followers.append(database.UserFollowers(user_id=user.id, follower_id=random_id))
+            followers.append(database.UserFollowers(
+                user_id=user.id, follower_id=random_id))
 
     database.db.session.add_all(followers)
     database.db.session.commit()
+
 
 def _add_test_data():
     print('adding test users')
@@ -112,12 +121,13 @@ def _setup_db(app: Flask):
 
         # Reloads DB if the .env contains: RELOAD_DB="True"
 
-        if(os.getenv("RELOAD_DB") == "True"):
-            print("Reloading DB...\n") #
+        if (os.getenv("RELOAD_DB") == "True"):
+            print("Reloading DB...\n")
             database.db.drop_all()
             database.db.create_all()
             # try:
-            admin = database.User(username='Admin', email='admin@gmail.com', password='aminuser', isAdmin=True)
+            admin = database.User(
+                username='Admin', email='admin@gmail.com', password='aminuser', isAdmin=True)
             database.db.session.add(admin)
             database.db.session.commit()
             _add_test_data()
@@ -129,6 +139,7 @@ def _setup_db(app: Flask):
 
         else:
             database.db.create_all()  # this is only needed if the database doesn't already exist
+
 
 def create_app():
     app = Flask(__name__, instance_relative_config=True)
