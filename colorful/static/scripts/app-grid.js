@@ -1,4 +1,4 @@
-document.addEventListener("colorfulLoaded", async () => { 
+document.addEventListener("colorfulLoaded", async () => {
     const user_id = document.getElementById("user_id").value;
     status_list = await colorful.getFriendsStatusList(user_id);
 
@@ -12,16 +12,22 @@ document.addEventListener("colorfulLoaded", async () => {
 });
 
 async function makeSquare(div, user_status) {
-    div.className = `bg-${colorful.getColorName(user_status.color)}-400 rounded cursor-pointer`;
+    let color = colorful.getColorName(user_status.color)
+    if (color !== undefined) {
+        color = color + '-400'
+    } else {
+        color = '[' + user_status.color + ']';
+    }
+    div.className = `bg-${color} rounded cursor-pointer`;
     div.value = user_status.name;
     div.addEventListener("click", (e) => {
         window.location.href = `/profile/${e.target.value}/`
     })
-    
+
     toolTip = document.createElement("div");
     createToolTip(toolTip, user_status);
     div.appendChild(toolTip);
-    
+
     tooltipTarget = document.createElement("button");
     createTooltipTarget(tooltipTarget, user_status);
     toolTip.appendChild(tooltipTarget);
