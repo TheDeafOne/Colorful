@@ -47,9 +47,8 @@ def _add_test_users(num_users: int):
     return users
 
 def _generate_coordinate():
-    # Generate latitude (-90 to 90) and longitude (-180 to 180)
-    latitude = random.uniform(-90, 90)
-    longitude = random.uniform(-180, 180)
+    latitude = random.uniform(-60, 60)
+    longitude = random.uniform(-120, 120)
     return latitude, longitude
 
 def _add_test_stati(users: list[database.User]):
@@ -61,9 +60,9 @@ def _add_test_stati(users: list[database.User]):
     for user in users:
         for i in range(random.randint(1,5)):
             random_datetime = f'{random.randint(2019,2023)}-{random.randint(1,12)}-{random.randint(1,28)} {random.randint(0,23)}:{random.randint(0,59)}:21.240752'
-            random_text = ' '.join([str(random_word_set[random.randint(0, len(random_word_set)-1)]).replace("'b",'').replace("'",'').upper() for _ in range(random.randint(3, 10))])
+            random_text = ' '.join([str(random_word_set[random.randint(0, len(random_word_set)-1)]).replace("'b",'').replace("'",'')[1:] for _ in range(random.randint(3, 10))])
             random_lat, random_long = _generate_coordinate()
-            random_color = '#' + str(hex(random.randrange(0, 2**24)))[2:]
+            random_color = '#' + str(hex(random.randrange(0, 2**24)))[2:].upper()
             new_random_status = database.Status(
                 time=random_datetime,
                 text=random_text,
@@ -97,7 +96,7 @@ def _add_test_followers(users: list[database.User]):
 
 def _add_test_data():
     print('adding test users')
-    users = _add_test_users(10)
+    users = _add_test_users(200)
     print('done adding test users')
     print('adding test statuses')
     _add_test_stati(users)
