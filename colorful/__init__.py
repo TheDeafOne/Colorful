@@ -73,13 +73,12 @@ def _add_test_stati(users: list[database.User]):
                 user=user.id
             )
             stati.append(new_random_status)
-            user.currentStatusID = new_random_status.id
         # set last status added for given user as that users current status
-    database.db.session.add_all(users)
-    database.db.session.commit()
 
     database.db.session.add_all(stati)
     database.db.session.commit()
+
+    
 
 def _add_test_followers(users: list[database.User]):
     followers = []
