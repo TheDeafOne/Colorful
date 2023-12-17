@@ -37,9 +37,13 @@ def random_char(char_num):
 def _add_test_users(num_users: int):
     users = []
     for i in range(num_users):
+        print(f'\ruser {i}')
         random_username = random_char(8)
         random_email = random_username+"@gmail.com"
-        database.User(username=random_username, email=random_email, password=random_username),
+        user = database.User(username=random_username, email=random_email, password=random_username)
+        users.append(user)
+    database.db.session.add_all(users)
+    database.db.session.commit()
     return users
 
 def _generate_coordinate():
@@ -55,11 +59,11 @@ def _add_test_stati(users: list[database.User]):
     stati = []
     # generate random number of statuses per user
     for user in users:
-        for _ in range(random.randint(1,100)):
+        for i in range(random.randint(1,5)):
             random_datetime = f'{random.randint(2019,2023)}-{random.randint(1,12)}-{random.randint(1,28)} {random.randint(0,23)}:{random.randint(0,59)}:21.240752'
-            random_text = ' '.join([random_word_set[random.randint(0, len(random_word_set))] for _ in range(random.randint(3, 10))])
+            random_text = ' '.join([str(random_word_set[random.randint(0, len(random_word_set)-1)]) for _ in range(random.randint(3, 10))])
             random_lat, random_long = _generate_coordinate()
-            random_color = hex(random.randrange(0, 2**24))
+            random_color = str(hex(random.randrange(0, 2**24)))
             new_random_status = database.Status(
                 time=random_datetime,
                 text=random_text,
@@ -69,8 +73,8 @@ def _add_test_stati(users: list[database.User]):
                 user=user.id
             )
             stati.append(new_random_status)
+            user.currentStatusID = new_random_status.id
         # set last status added for given user as that users current status
-        user.currentStatusID = new_random_status.id
     database.db.session.add_all(users)
     database.db.session.commit()
 
@@ -81,8 +85,8 @@ def _add_test_followers(users: list[database.User]):
     followers = []
     for user in users:
         # random number of followers 
-        for _ in range(random.randint(10,700)):
-            random_id = users[random.randint(0, len(users))].id
+        for _ in range(random.randint(0,len(users)-1)):
+            random_id = users[random.randint(0, len(users)-1)].id
             followers.append(database.UserFollowers(user_id=user.id, follower_id=random_id))
 
     database.db.session.add_all(followers)
@@ -90,7 +94,7 @@ def _add_test_followers(users: list[database.User]):
 
 def _add_test_data():
     print('adding test users')
-    users = _add_test_users(1000)
+    users = _add_test_users(10)
     print('done adding test users')
     print('adding test statuses')
     _add_test_stati(users)
@@ -109,18 +113,17 @@ def _setup_db(app: Flask):
         if(os.getenv("RELOAD_DB") == "True"):
             print("Reloading DB...\n") #
             database.db.drop_all()
+            database.db.create_all()
+            # try:
             admin = database.User(username='Admin', email='admin@gmail.com', password='aminuser', isAdmin=True)
             database.db.session.add(admin)
             database.db.session.commit()
-            print("\n ^^^NOT AN ACTUAL ERROR^^^\n\nDatabases Dropped")
-            database.db.create_all()
-            try:
-                # database.db.session.add(database.User(username="UserA", email="a@a.a", password=12345678))
-                _add_test_data()
+            _add_test_data()
 
-                print("Database Loaded")
-            except:
-                print("Database Re-Population Failed")
+            print("Database Loaded")
+            # except Exception as e:
+            #     print(e)
+            #     print("Database Re-Population Failed")
 
         else:
             database.db.create_all()  # this is only needed if the database doesn't already exist
