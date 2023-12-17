@@ -32,7 +32,13 @@ async function displayStatusList() {
     for (user_status of stati) {
         // console.log(user_status);
         const containerDiv = document.createElement("div")
-        containerDiv.className = `bg-white drop-shadow p-4 rounded my-3 border-t-8 border-t-${colorful.getColorName(user_status.color)}-400`
+        let color = colorful.getColorName(user_status.color)
+        if (color !== undefined) {
+            color = color + '-400'
+        } else {
+            color = '[' + user_status.color + ']';
+        }
+        containerDiv.className = `bg-white drop-shadow p-4 rounded my-3 border-t-8 border-t-${color}`
         const statusSpan = document.createElement("span");
         statusSpan.innerText = `${user_status.name}: ${user_status.status} - (${user_status.latitude}, ${user_status.longitude}) - ${user_status.color}`
 

@@ -36,7 +36,13 @@ async function get_users() {
         containerDiv.addEventListener("click", (e) => {
             window.location.href = `/profile/${e.target.value}`
         })
-        containerDiv.className = `bg-white drop-shadow p-4 rounded my-3 border-t-8 border-t-${colorful.getColorName(other_user.color)}-400 cursor-pointer`
+        let color = colorful.getColorName(other_user.color)
+        if (color !== undefined) {
+            color = color + '-400'
+        } else {
+            color = '[' + other_user.color + ']';
+        }
+        containerDiv.className = `bg-white drop-shadow p-4 rounded my-3 border-t-8 border-t-${color} cursor-pointer`
         const statusSpan = document.createElement("span");
         statusSpan.classList.add('pointer-events-none')
         statusSpan.innerText = other_user.username;

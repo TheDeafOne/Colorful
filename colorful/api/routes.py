@@ -50,7 +50,6 @@ def determineColor(status):
 @login_required
 def get_status_list():
     users = database.User.query.all()
-
     stati = []
     user: database.User
     for user in users:
@@ -74,7 +73,6 @@ def get_status_list():
                 'latitude': status.latitude,
                 'time': status.time
             })
-
     return jsonify(stati)
 
 

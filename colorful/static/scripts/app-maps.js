@@ -36,7 +36,13 @@ async function displayStatusList() {
         //     glyphColor: "white"
         // })
         const colorThing = document.createElement("div");
-        colorThing.className = `rounded-full p-5 bg-${colorful.getColorName(user_status.color)}-400`;
+        let color = colorful.getColorName(user_status.color)
+        if (color !== undefined) {
+            color = color + '-400'
+        } else {
+            color = '[' + user_status.color + ']';
+        }
+        colorThing.className = `rounded-full p-5 bg-${color}`;
         colorThing.innerHTML = `
         <div class="hidden">
         ${user_status.status}
