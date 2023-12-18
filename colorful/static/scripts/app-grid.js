@@ -1,15 +1,26 @@
 document.addEventListener("colorfulLoaded", async () => {
-    const user_id = document.getElementById("user_id").value;
-    status_list = await colorful.getFriendsStatusList(user_id);
+    const usersFilter = document.getElementById("usersFilter");
+    usersFilter.addEventListener("change", loadStati);
+    if (sessionStorage.getItem("usersFilter") !== null) {
+        usersFilter.value = sessionStorage.getItem("usersFilter");
+    }
+    loadStati();
+});
+
+async function loadStati() {
+    const usersFilter = document.getElementById("usersFilter");
+    sessionStorage.setItem('usersFilter', usersFilter.value);
+    status_list = await colorful.getStatusList(usersFilter.value);
 
     const container = document.getElementById("container");
-    container.classList.add(`grid-cols-${calculateGridSize(container)}`);
+    container.className = `grid gap-4 grid-cols-${calculateGridSize(status_list.length)}`
+    container.innerHTML = "";
     for (user_status of status_list) {
         const div = document.createElement("div");
         makeSquare(div, user_status);
         container.appendChild(div);
     }
-});
+}
 
 async function makeSquare(div, user_status) {
     let color = colorful.getColorName(user_status.color)
@@ -18,60 +29,24 @@ async function makeSquare(div, user_status) {
     } else {
         color = '[' + user_status.color + ']';
     }
-    div.className = `bg-${color} rounded cursor-pointer`;
+    div.className = `bg-${color} group relative rounded cursor-pointer p-8 border `;
     div.value = user_status.name;
     div.addEventListener("click", (e) => {
-        window.location.href = `/profile/${e.target.value}/`
+        window.location.href = `/profile/${e.target.value}/`;
     })
 
-    toolTip = document.createElement("div");
-    createToolTip(toolTip, user_status);
-    div.appendChild(toolTip);
-
-    tooltipTarget = document.createElement("button");
-    createTooltipTarget(tooltipTarget, user_status);
-    toolTip.appendChild(tooltipTarget);
+    const tooltip = document.createElement("div");
+    tooltip.className = "pointer-events-none absolute left-0 w-full opacity-0 transition-opacity group-hover:opacity-100 bg-gray-500 text-gray-50 px-2 align-baseline z-50";
+    tooltip.innerText = `${user_status.name}: ${user_status.status} - (${user_status.latitude}, ${user_status.longitude}) - ${user_status.color}`;
+    div.appendChild(tooltip);
+    console.log(tooltip.offsetHeight)
 }
 
-async function createToolTip(element, user_status) {
-    element.className = "\
-        relative \
-        before:content-[attr(data-tip)] \
-        before:absolute \
-        before:px-3 before:py-2 \
-        before:left-1/2 before:-top-3 \
-        before:2-max before:max-w-xs \
-        before:-translate-x-1/2 before:-translate-y-full \
-        before:bg-gray-700 before:text-white \
-        before:rounded-md before:opacity-0 \
-        before:transition-all \
-        \
-        after:absolute \
-        after:left-1/2 after:-top-3 \
-        after:h-0 after:2-0 \
-        after:-translate-x-1/2 after:border-8 \
-        after:border-t-gray-700 \
-        after:border-l-transparent \
-        after:border-b-transparent \
-        after:border-r-transparent \
-        after:opacity-0 \
-        after:transition-all \
-        \
-        hover:before:opacity-100 hover:after:opacity-100 \
-        ";
-    element.setAttribute("data-tip", `${user_status.name}: ${user_status.status} - (${user_status.latitude}, ${user_status.longitude}) - ${user_status.color}`);
-    element.value = user_status.name;
-}
-
-async function createTooltipTarget(element, user_status) {
-    element.value = user_status.name;
-}
-
-function calculateGridSize(container) {
+function calculateGridSize(length) {
     const min = 2;
-    const max = 15;
+    const max = 10;
 
-    let gridSize = Math.floor(Math.sqrt(container.children.length));
+    let gridSize = Math.floor(Math.sqrt(length));
     if (gridSize > max) {
         gridSize = max;
     } else if (gridSize < min) {

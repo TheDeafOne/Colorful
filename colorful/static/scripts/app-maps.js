@@ -1,3 +1,4 @@
+let markers = []
 const onMapLoad = async () => {
     const setStatusDiv = document.getElementById('setStatus');
     setStatusDiv.classList.add("p-2", "bg-white", "text-lg", "drop-shadow", "rounded-sm", "m-2");
@@ -15,6 +16,13 @@ document.addEventListener("colorfulLoaded", () => {
     document.addEventListener("mapCreated", onMapLoad);
     const button = document.getElementById("setStatus-button");
     button.addEventListener("click", addStatus);
+
+    // Updates the usersFilter
+    const usersFilter = document.getElementById("usersFilter");
+    usersFilter.addEventListener("change", displayStatusList);
+    if (sessionStorage.getItem("usersFilter") !== null) {
+        usersFilter.value = sessionStorage.getItem("usersFilter");
+    }
 });
 async function addStatus() {
     const statusStr = document.getElementById("setStatus-bar").value
@@ -27,7 +35,14 @@ async function addStatus() {
 }
 
 async function displayStatusList() {
-    const stati = await colorful.getStatusList()
+    const usersFilter = document.getElementById("usersFilter");
+    sessionStorage.setItem('usersFilter', usersFilter.value);
+    console.log("usersFilter")
+    const stati = await colorful.getStatusList(usersFilter.value)
+    for (const marker of markers) {
+        marker.map = null
+    }
+    markers = []
 
     for (user_status of stati) {
         // const colorPin =  new PinElement({
@@ -55,6 +70,7 @@ async function displayStatusList() {
             content: colorThing,
             title: user_status.status
         })
+        markers.push(marker)
         console.log(user_status)
     }
 }

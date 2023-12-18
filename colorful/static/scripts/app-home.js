@@ -1,4 +1,9 @@
 document.addEventListener("colorfulLoaded", async () => {
+    const usersFilter = document.getElementById("usersFilter");
+    usersFilter.addEventListener("change", displayStatusList);
+    if (sessionStorage.getItem("usersFilter") !== null) {
+        usersFilter.value = sessionStorage.getItem("usersFilter");
+    }
     displayStatusList();
     colorful.getLocation()
 
@@ -25,7 +30,9 @@ async function addStatus() {
 }
 
 async function displayStatusList() {
-    const stati = await colorful.getStatusList()
+    const usersFilter = document.getElementById("usersFilter");
+    sessionStorage.setItem('usersFilter', usersFilter.value);
+    const stati = await colorful.getStatusList(usersFilter.value)
     const statusList = document.getElementById("status-list")
     statusList.innerHTML = ""
 

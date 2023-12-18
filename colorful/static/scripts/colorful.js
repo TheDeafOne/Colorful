@@ -62,17 +62,18 @@ window.colorful = {};
         })
     }
 
-    self.getStatusList = async () => {
+    // self.getStatusList = async () => {
+    //     // grab all statuses
+    //     const url = '/api/getStatusList/'
+    //     const response = await fetch(url)
+    //     const responseJSON = await response.json()
+
+    //     return responseJSON
+    // }
+
+    self.getStatusList = async (usersFilterValue) => {
         // grab all statuses
-        const url = '/api/getStatusList/'
-        const response = await fetch(url)
-        const responseJSON = await response.json()
-
-        return responseJSON
-    }
-
-    self.getFriendsStatusList = async (user_id) => {
-        const url = `/api/getFriendsStatusList/${user_id}/`
+        const url = `/api/getStatusList/${usersFilterValue}/`
         const response = await fetch(url)
         const responseJSON = await response.json()
 

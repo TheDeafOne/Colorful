@@ -26,11 +26,15 @@
                     href="/app/">Feed</a>
                 <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 hover:bg-gray-200"
                     href="/app/map/">Map</a>
-                <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 hover:bg-gray-200"
-                    href="#">Palet</a>
+                <!--<a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 hover:bg-gray-200"
+                    href="#">Palet</a> -->
                 <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 hover:bg-gray-200"
                 href="/app/grid">Grid</a>
             </div>
+            <select id="usersFilter" class="m-2 max-w-fit bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option value="AllUsers" selected> All Users</option>
+                <option value="FriendsOnly"> Friends Only</option>
+            </select>
             <div x-data="{ 'showModal': false }" @keydown.escape="showModal = false">
                 <!-- Trigger for Modal -->
                 <button type="button" @click="showModal = true; clearSearchList();">
