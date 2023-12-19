@@ -12,6 +12,7 @@ document.addEventListener("colorfulLoaded", async () => {
     const bar = document.getElementById("setStatus-bar");
     bar.addEventListener("keydown", (e) => {
         if (e.code === "Enter") {
+            addStatus()
             bar.value = "";
         }
     })
@@ -20,6 +21,10 @@ document.addEventListener("colorfulLoaded", async () => {
 
 async function addStatus() {
     const statusStr = document.getElementById("setStatus-bar").value
+    if(statusStr == ""){
+        return
+    }
+
     const { latitude, longitude } = await colorful.getLocation();
     document.getElementById("setStatus-bar").value = ""
     await colorful.setStatus(statusStr, latitude, longitude);
@@ -47,7 +52,8 @@ async function displayStatusList() {
         }
         containerDiv.className = `bg-white drop-shadow p-4 rounded my-3 border-t-8 border-t-${color}`
         const statusSpan = document.createElement("span");
-        statusSpan.innerText = `${user_status.name}: ${user_status.status} - (${user_status.latitude}, ${user_status.longitude}) - ${user_status.color}`
+        statusSpan.innerText = `${user_status.name}: ${user_status.status}`
+        // statusSpan.innerText = `${user_status.name}: ${user_status.status} - (${user_status.latitude}, ${user_status.longitude}) - ${user_status.color}`
 
         containerDiv.appendChild(statusSpan);
         statusList.append(containerDiv)

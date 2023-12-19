@@ -37,7 +37,9 @@ async function makeSquare(div, user_status) {
 
     const tooltip = document.createElement("div");
     tooltip.className = "pointer-events-none absolute left-0 w-full opacity-0 transition-opacity group-hover:opacity-100 bg-gray-500 text-gray-50 px-2 align-baseline z-50";
-    tooltip.innerText = `${user_status.name}: ${user_status.status} - (${user_status.latitude}, ${user_status.longitude}) - ${user_status.color}`;
+    tooltip.innerText = `${user_status.name}: ${user_status.status}`;
+    // tooltip.innerText = `${user_status.name}: ${user_status.status} - (${user_status.latitude}, ${user_status.longitude}) - ${user_status.color}`;
+
     div.appendChild(tooltip);
     console.log(tooltip.offsetHeight)
 }

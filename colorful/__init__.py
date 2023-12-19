@@ -38,7 +38,7 @@ def _add_test_users(num_users: int):
     users = []
     for i in range(num_users):
         print(f'\ruser {i}')
-        random_username = random_char(8)
+        random_username = f"RandUser_{random_char(8)}"
         random_email = random_username+"@gmail.com"
         user = database.User(username=random_username,
                              email=random_email, password=random_username)
@@ -105,7 +105,7 @@ def _add_test_followers(users: list[database.User]):
 
 def _add_test_data():
     print('adding test users')
-    users = _add_test_users(200)
+    users = _add_test_users(5)
     print('done adding test users')
     print('adding test statuses')
     _add_test_stati(users)
