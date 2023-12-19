@@ -45,6 +45,7 @@ def _add_test_users(num_users: int):
         users.append(user)
     database.db.session.add_all(users)
     database.db.session.commit()
+
     return users
 
 
@@ -130,6 +131,7 @@ def _setup_db(app: Flask):
                 username='Admin', email='admin@gmail.com', password='aminuser', isAdmin=True)
             database.db.session.add(admin)
             database.db.session.commit()
+            database.db.session.add(database.UserFollowers(user_id=admin.id, follower_id=admin.id))
             _add_test_data()
 
             print("Database Loaded")

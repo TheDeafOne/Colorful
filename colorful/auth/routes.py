@@ -28,6 +28,10 @@ def post_register():
                         password=form.password.data)  # type:ignore
             database.db.session.add(user)
             database.db.session.commit()
+
+            database.db.session.add(database.UserFollowers(user_id=user.id, follower_id=user.id))
+            database.db.session.commit()
+
             return redirect(url_for('auth.get_login'))
         else:  # if the user already exists
             # flash a warning message and redirect to get registration form

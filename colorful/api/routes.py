@@ -54,6 +54,7 @@ def get_status_list(usersToReturn: str):
     else:
         friends_ids = [friend.user_id for friend in database.UserFollowers.query.filter_by(follower_id=current_user.get_id())]
         users = database.User.query.filter(database.User.id.in_(friends_ids)).all()
+
     
     
     stati = []
