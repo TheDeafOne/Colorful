@@ -29,9 +29,10 @@
                 <!--<a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 hover:bg-gray-200"
                     href="#">Palet</a> -->
                 <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 hover:bg-gray-200"
-                href="/app/grid">Grid</a>
+                    href="/app/grid">Grid</a>
             </div>
-            <select id="usersFilter" class="m-2 max-w-fit bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <select id="usersFilter"
+                class="m-2 max-w-fit bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option value="AllUsers" selected> All Users</option>
                 <option value="FriendsOnly"> Friends Only</option>
             </select>
@@ -45,7 +46,7 @@
                 <div class="fixed inset-0 z-30 flex items-center justify-center overflow-auto bg-black bg-opacity-50"
                     x-show="showModal">
                     <!-- Modal inner -->
-                    <div class="lg:w-1/4 lg:h-1/2 md:w-1/2 sm:w-3/4 sm:h-4/5 px-6 py-4 mx-auto text-left bg-white rounded shadow-lg"
+                    <div class="lg:w-1/4 lg:min-h-1/2 md:w-1/2 sm:w-3/4 sm:min-h-4/5 px-6 py-4 mx-auto text-left bg-white rounded shadow-lg"
                         @click.away="showModal = false" x-transition:enter="motion-safe:ease-out duration-300"
                         x-transition:enter-start="opacity-0 scale-90" x-transition:enter-end="opacity-100 scale-100">
                         <!-- Title / Close-->
