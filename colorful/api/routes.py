@@ -148,7 +148,10 @@ def get_user_list():
         for u in users:
             userJSON = u.to_json()
             curStatus = database.Status.query.get(u.currentStatusID)
-            userJSON["status"] = curStatus.to_json()
+            if(curStatus):
+                userJSON["status"] = curStatus.to_json()
+            else:
+                userJSON["status"] = None
             outputUsers.append(userJSON)
 
         return jsonify(outputUsers)

@@ -15,9 +15,14 @@ async function displayUserList(){
 
         const dataDiv = document.createElement("div")
         const statusSpan = document.createElement("span");
-        statusSpan.innerText = `${user.username}: ${user.status.text}`
         const statusColorSpan = document.createElement("span");
-        statusColorSpan.className = `px-4 bg-[${user.status.color}] mx-2`
+        if(user.status){
+            statusSpan.innerText = `${user.username}: ${user.status.text}`
+            statusColorSpan.className = `px-4 bg-[${user.status.color}] mx-2`
+        } else{
+            statusSpan.innerText = `${user.username}: None`
+
+        }
         dataDiv.appendChild(statusSpan);
         dataDiv.appendChild(statusColorSpan)
 
