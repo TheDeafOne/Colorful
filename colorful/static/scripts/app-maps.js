@@ -26,7 +26,7 @@ document.addEventListener("colorfulLoaded", () => {
 });
 async function addStatus() {
     const statusStr = document.getElementById("setStatus-bar").value
-    const { latitude, longitude } = await colorful.getLocation();
+    const { latitude, longitude } = await colorful.getGeolocationData();
 
     await colorful.setStatus(statusStr, latitude, longitude);
 
