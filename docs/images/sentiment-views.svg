@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640" role="img" aria-labelledby="title desc">
+  <title id="title">Colorful: text, color, and place</title>
+  <desc id="desc">Concept illustration of three views of synthetic posts: readable messages, an eight-emotion color grid, and fictional posts plotted by location.</desc>
+  <defs><linearGradient id="accent" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ea580c"/><stop offset="1" stop-color="#e879f9"/></linearGradient></defs>
+  <rect width="1200" height="640" rx="20" fill="#faf8f5"/>
+  <rect width="1200" height="8" fill="url(#accent)"/>
+  <g font-family="Arial, Helvetica, sans-serif" fill="#242126">
+    <text x="42" y="60" font-size="20" font-weight="700" fill="#a74616">COLORFUL</text>
+    <text x="42" y="111" font-size="35" font-weight="700">One collection of posts. Different ways to see it.</text>
+    <text x="42" y="146" font-size="18" fill="#605b64">An exploration of social media through text, emotion, and location.</text>
+    <rect x="32" y="182" width="352" height="365" rx="15" fill="#fff" stroke="#e6e0db"/>
+    <rect x="400" y="182" width="352" height="365" rx="15" fill="#fff" stroke="#e6e0db"/>
+    <rect x="768" y="182" width="400" height="365" rx="15" fill="#fff" stroke="#e6e0db"/>
+    <text x="54" y="221" font-size="23" font-weight="700">Read the message</text>
+    <text x="422" y="221" font-size="23" font-weight="700">Notice the colors</text>
+    <text x="790" y="221" font-size="23" font-weight="700">Explore the locations</text>
+    <g font-size="16">
+      <rect x="53" y="249" width="310" height="72" rx="9" fill="#fffcdf"/>
+      <circle cx="74" cy="271" r="6" fill="#ffff00" stroke="#c5b900"/>
+      <text x="90" y="277" font-weight="700">Maya · Lisbon</text>
+      <text x="68" y="303">“Happy to see my friends again.”</text>
+      <rect x="53" y="334" width="310" height="72" rx="9" fill="#eef0ff"/>
+      <circle cx="74" cy="356" r="6" fill="#0000ff"/>
+      <text x="90" y="362" font-weight="700">Sam · Toronto</text>
+      <text x="68" y="388">“A sad goodbye this morning.”</text>
+      <rect x="53" y="419" width="310" height="72" rx="9" fill="#fff0df"/>
+      <circle cx="74" cy="441" r="6" fill="#ff8800"/>
+      <text x="90" y="447" font-weight="700">Ren · Tokyo</text>
+      <text x="68" y="473">“What a surprise!”</text>
+    </g>
+    <g font-size="15" text-anchor="middle">
+      <rect x="422" y="251" width="66" height="76" rx="8" fill="#ff0000"/><text x="455" y="347">anger</text>
+      <rect x="500" y="251" width="66" height="76" rx="8" fill="#ff8888"/><text x="533" y="347">anticipation</text>
+      <rect x="578" y="251" width="66" height="76" rx="8" fill="#00ff00"/><text x="611" y="347">disgust</text>
+      <rect x="656" y="251" width="66" height="76" rx="8" fill="#000000"/><text x="689" y="347">fear</text>
+      <rect x="422" y="377" width="66" height="76" rx="8" fill="#ffff00"/><text x="455" y="473">joy</text>
+      <rect x="500" y="377" width="66" height="76" rx="8" fill="#0000ff"/><text x="533" y="473">sadness</text>
+      <rect x="578" y="377" width="66" height="76" rx="8" fill="#ff8800"/><text x="611" y="473">surprise</text>
+      <rect x="656" y="377" width="66" height="76" rx="8" fill="#333300"/><text x="689" y="473">trust</text>
+    </g>
+    <text x="422" y="515" font-size="14" fill="#605b64">Stored palette from colorful/color_map.py</text>
+    <g stroke="#e2ded9" stroke-width="1">
+      <path d="M800 270H1138M800 330H1138M800 390H1138M800 450H1138M800 510H1138"/>
+      <path d="M800 270V510M884 270V510M969 270V510M1053 270V510M1138 270V510"/>
+    </g>
+    <text x="800" y="259" font-size="13" fill="#605b64">latitude / longitude</text>
+    <text x="802" y="532" font-size="12" fill="#605b64">180° W</text><text x="960" y="532" font-size="12" fill="#605b64">0°</text><text x="1094" y="532" font-size="12" fill="#605b64">180° E</text>
+    <circle cx="895" cy="332" r="9" fill="#0000ff" stroke="#fff" stroke-width="3"/><text x="853" y="316" font-size="15">Toronto</text>
+    <circle cx="960" cy="339" r="9" fill="#ffff00" stroke="#827700" stroke-width="1.5"/><text x="965" y="364" font-size="15">Lisbon</text>
+    <circle cx="1100" cy="342" r="9" fill="#ff8800" stroke="#fff" stroke-width="3"/><text x="1074" y="324" font-size="15">Tokyo</text>
+    <circle cx="997" cy="435" r="9" fill="#ff8888" stroke="#fff" stroke-width="3"/><text x="1009" y="441" font-size="15">Cape Town</text>
+    <circle cx="1013" cy="372" r="9" fill="#333300" stroke="#fff" stroke-width="3"/><text x="1026" y="386" font-size="15">Nairobi</text>
+    <text x="42" y="590" font-size="16" fill="#605b64">Text, emotion, and location views using synthetic posts.</text>
+    <text x="42" y="615" font-size="14" fill="#605b64">Color highlights the emotion. The message provides the context.</text>
+  </g>
+</svg>
