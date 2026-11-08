@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640" role="img" aria-labelledby="title desc">
   <title id="title">Colorful: text, color, and place</title>
-  <desc id="desc">Concept illustration of three views of synthetic posts: readable messages, an eight-emotion color grid, and fictional posts plotted by location. It is not an application screenshot.</desc>
+  <desc id="desc">Concept illustration of three views of synthetic posts: readable messages, an eight-emotion color grid, and fictional posts plotted by location.</desc>
   <defs><linearGradient id="accent" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ea580c"/><stop offset="1" stop-color="#e879f9"/></linearGradient></defs>
   <rect width="1200" height="640" rx="20" fill="#faf8f5"/>
   <rect width="1200" height="8" fill="url(#accent)"/>
@@ -50,7 +50,7 @@
     <circle cx="1100" cy="342" r="9" fill="#ff8800" stroke="#fff" stroke-width="3"/><text x="1074" y="324" font-size="15">Tokyo</text>
     <circle cx="997" cy="435" r="9" fill="#ff8888" stroke="#fff" stroke-width="3"/><text x="1009" y="441" font-size="15">Cape Town</text>
     <circle cx="1013" cy="372" r="9" fill="#333300" stroke="#fff" stroke-width="3"/><text x="1026" y="386" font-size="15">Nairobi</text>
-    <text x="42" y="590" font-size="16" fill="#605b64">Concept illustration using synthetic posts and locations; not an application screenshot or a sentiment survey.</text>
-    <text x="42" y="615" font-size="14" fill="#605b64">Color is a simple lexicon-based interpretation. The original message provides the context.</text>
+    <text x="42" y="590" font-size="16" fill="#605b64">Text, emotion, and location views using synthetic posts.</text>
+    <text x="42" y="615" font-size="14" fill="#605b64">Color highlights the emotion. The message provides the context.</text>
   </g>
 </svg>

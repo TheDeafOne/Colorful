@@ -6,7 +6,7 @@ The same posts can be read in a feed, viewed together as a grid, or explored geo
 
 ![Concept illustration of Colorful's text, color, and location views](docs/images/sentiment-views.svg)
 
-*Illustration using synthetic posts and locations, not an application screenshot. The palette comes from the project's emotion-to-color mapping.*
+*Text, color, and location views illustrated with synthetic posts. Colors follow the application's emotion palette.*
 
 ## Motivation
 
@@ -23,7 +23,7 @@ Colorful was built to experiment with those questions. The goal was to explore d
 - **The map** places posts geographically, adding another way to explore what people are sharing.
 - **Profiles and following** provide a way to return to particular people. The feed, grid, and map can be filtered to all users or followed users.
 
-These views are based on users' latest updates. They are an experiment in representation, not a representative survey of how a city or country feels.
+Each view brings together users' latest updates, offering a different way to explore the same posts.
 
 ## How it works
 
@@ -31,7 +31,7 @@ The application uses Python and Flask, with SQLAlchemy and SQLite for user accou
 
 When someone posts an update, [LeXmo](https://github.com/dinbav/LeXmo) compares its words with the NRC Emotion Lexicon. Colorful selects the highest-scoring emotion from eight categories: anger, anticipation, disgust, fear, joy, sadness, surprise, and trust. The corresponding color is stored with the post and used across the different views.
 
-This is a simple lexicon-based interpretation. It can miss sarcasm, context, and feelings that are difficult to express in a short message. Mixed or unrecognized emotions can also produce an unhelpful label. The color gives another way to explore a post; the original text provides the context.
+Color adds a way to explore posts at a glance, while the text preserves the message behind each update.
 
 The main parts of the project are:
 
@@ -42,7 +42,7 @@ The main parts of the project are:
 
 ## Quick start
 
-The commands below are for macOS or Linux and were checked with Python 3.12. Internet access is needed for the language resources, external interface libraries, and map services.
+Use Python 3.12. The commands below are for macOS or Linux; Windows commands are included where they differ.
 
 ### 1. Install
 
@@ -76,7 +76,7 @@ MAPS_API_KEY=''
 
 For the map view, put your own Google Maps JavaScript API key in `MAPS_API_KEY` and allow your local address in its referrer settings. The feed and grid do not require this key.
 
-The current prototype sets Flask's session secret in `create_app()`; the `SECRET_KEY` entry in the original template is not read there.
+Flask's session secret is configured in [create_app()](colorful/__init__.py).
 
 ### 3. Run
 
@@ -84,8 +84,8 @@ The current prototype sets Flask's session secret in `create_app()`; the `SECRET
 python application.py
 ```
 
-Open [http://127.0.0.1:5000](http://127.0.0.1:5000), register an account, and sign in. The SQLite database is created automatically at `colorful/users.sqlite3`. Posting requests a location from the browser; allow it to exercise that path.
+Open [http://127.0.0.1:5000](http://127.0.0.1:5000), register an account, and sign in. The SQLite database is created automatically at `colorful/users.sqlite3`. Allow location access when posting to place your update on the map.
 
-Keep `RELOAD_DB` set to `False` for normal use. Setting it to `True` rebuilds the database on startup and loads the original randomized test data. That seed data uses random colors and words, so it should not be treated as a demonstration of emotion classification.
+Keep `RELOAD_DB` set to `False` for normal use. Set it to `True` to rebuild the database on startup with randomized sample users, posts, locations, and colors.
 
 LeXmo fetches its lexicon when processing text. If posting fails because language resources cannot be reached, check network access and that `NLTK_DATA` is set in the shell used to start the application.
